@@ -20,23 +20,22 @@
 *.qbs.user.*
 *.moc
 moc_*.cpp
-moc_*.h
 qrc_*.cpp
 ui_*.h
 Makefile*
-*build-*
+*-build-*
 
 # QtCreator
 
 *.autosave
 
-# QtCtreator Qml
+#QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
 
-# QtCtreator CMake
-CMakeLists.txt.user*
+build-*
+html
+build
+vendor
 *.qmlc
-*.jsc
-
-source/**/vendor
+*.swp
