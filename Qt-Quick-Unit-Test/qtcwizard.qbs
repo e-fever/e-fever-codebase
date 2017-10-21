@@ -1,7 +1,6 @@
 import qbs
 import qbs.Environment
 
-Project {
 
 
     Product {
@@ -23,4 +22,3 @@ Project {
     }
 
 
-}
