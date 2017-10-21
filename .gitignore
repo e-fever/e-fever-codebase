@@ -38,5 +38,6 @@ Makefile*
 CMakeLists.txt.user*
 *.qmlc
 *.jsc
+default/
 
 source/**/vendor
