@@ -1,24 +1,25 @@
 import qbs
 import qbs.Environment
 
-
-
-    Product {
-        Group {
-            name: "all"
-            files: "**"
-            qbs.install: true
-            qbs.installSourceBase: "."
-            qbs.installRoot: {
-                var res;
-                if (qbs.targetOS == "windows") {
-                    res = Environment.getEnv("APPDATA") + "/QtProject/qtcreator/templates/wizards" 
-                } else {
-                    res = Environment.getEnv("HOME") + "/.config/QtProject/qtcreator/templates/wizards/" 
-                }
-                return res;
+Product {
+    name: "Qt Quick Unit Test"
+    
+    Group {
+        name: "all"
+        files: "**"
+        excludeFiles: "./README.md"
+        qbs.install: true
+        qbs.installSourceBase: "."
+        qbs.installRoot: {
+            var res;
+            if (qbs.targetOS == "windows") { // use "==" to compare qbs.targetOS
+                res = Environment.getEnv("APPDATA") + "/QtProject/qtcreator/templates/wizards" 
+            } else {
+                res = Environment.getEnv("HOME") + "/.config/QtProject/qtcreator/templates/wizards/" 
             }
-        }    
-    }
+            return res;
+        }
+    }    
+}
 
 
