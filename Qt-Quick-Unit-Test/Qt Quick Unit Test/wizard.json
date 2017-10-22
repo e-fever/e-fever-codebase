@@ -5,7 +5,7 @@
     "category": "H.Project",
     "trDescription": "Creates a simple Qt Quick Test based unit test for a set of feature. Unit tests allow you to verify that the code is fit for use and that there have no regressions. It is provided by E-Fever Limited.",
     "trDisplayName": "Qt Quick Unit Test",
-    "trDisplayCategory": "Other Project",
+    "trDisplayCategory": "E-Fever Codebase",
     "icon": "",
     "enabled": "%{JS: [ %{Plugins} ].indexOf('QmakeProjectManager') >= 0}",
     "options": [

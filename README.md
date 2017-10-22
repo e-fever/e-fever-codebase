@@ -1,7 +1,7 @@
 A Collection of Project Wizard for Qt Creator
 =============================================
 
-It is a repository of a collection of Project Wizard used by E-Fever for its open source projects / in-house project. 
+It is a repository of a collection of Project Wizard used by E-Fever for its open source projects and in-house projects. 
 
 Flux
 ----
