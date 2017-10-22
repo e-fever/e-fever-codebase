@@ -1,0 +1,104 @@
+{
+    "version": 1,
+    "kind": "project",
+    "id": "QtQmProjectlLibrary.12a7c9",
+    "category": "EFCodeBase",
+    "trDescription": "Creates a library project with Testable",
+    "trDisplayName": "Qt/QML Library Project",
+    "trDisplayCategory": "E-Fever Codebase",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmlProjectManager') >= 0}",
+    "options": [
+        {
+            "key": "ProFileName",
+            "value": "%{JS: Util.fileName('tests/%{ProjectName}unittests/%{ProjectName}unittests', 'pro')}"
+        },
+        {
+            "key": "MainQmlFileName",
+            "value": "%{JS: Util.fileName('%{ProjectName}', 'qml')}"
+        },
+        {
+            "key": "QtQuickVersion",
+            "value": "%{JS: %{QtVersion}.qtQuickVersion}"
+        },
+        {
+            "key": "QtQuickWindowVersion",
+            "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}"
+        },
+        {
+            "key": "UiSupport",
+            "value": "%{JS: '%{QtQuickVersion}' !== '2.3' }"
+        },
+        {
+            "key": "IsUiFileInUse",
+            "value": "%{JS: %{UiSupport} && %{QmlUiSplit} }"
+        }
+    ],
+    "pages": [
+        {
+            "trDisplayName": "Project Location",
+            "trShortTitle": "Location",
+            "typeId": "Project"
+        },
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators": [
+        {
+            "typeId": "File",
+            "data": [
+                {
+                    "source": ".gitignore",
+                    "target": ".gitignore"
+                },
+                {
+                    "source": "LICENSE",
+                    "target": "LICENSE"
+                },
+                {
+                    "source": "MYPROJECT.pri",
+                    "target": "%{ProjectName}.pri"
+                },
+                {
+                    "source": "MYPROJECT.qrc",
+                    "target": "%{ProjectName}.qrc"
+                },
+                {
+                    "source": "README.md",
+                    "target": "README.md"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/.gitignore",
+                    "target": "tests/%{ProjectName}unittests/.gitignore"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/main.cpp",
+                    "target": "tests/%{ProjectName}unittests/main.cpp"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/MYPROJECTunittests.pro",
+                    "target": "tests/%{ProjectName}unittests/%{ProjectName}unittests.pro",
+                    "openAsProject": true
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/qmltests/tst_QmlTests.qml",
+                    "target": "tests/%{ProjectName}unittests/qmltests/tst_QmlTests.qml"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/qpm.json",
+                    "target": "tests/%{ProjectName}unittests/qpm.json"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/tests.cpp",
+                    "target": "tests/%{ProjectName}unittests/tests.cpp"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/tests.h",
+                    "target": "tests/%{ProjectName}unittests/tests.h"
+                }
+            ]
+        }
+    ]
+}

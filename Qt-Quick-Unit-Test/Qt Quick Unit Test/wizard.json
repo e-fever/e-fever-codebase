@@ -2,7 +2,7 @@
     "version": 1,
     "kind": "project",
     "id": "EF.Project.14ece9",
-    "category": "H.Project",
+    "category": "EFCodeBase",
     "trDescription": "Creates a simple Qt Quick Test based unit test for a set of feature. Unit tests allow you to verify that the code is fit for use and that there have no regressions. It is provided by E-Fever Limited.",
     "trDisplayName": "Qt Quick Unit Test",
     "trDisplayCategory": "E-Fever Codebase",
