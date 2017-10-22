@@ -31,7 +31,6 @@ Files:
 ```
 .
 ├── %{ProjectName}.pro
-├── generator.json
 ├── main.cpp
 └── tst_Sample.qml
 ```
