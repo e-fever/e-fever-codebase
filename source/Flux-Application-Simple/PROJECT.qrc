@@ -8,8 +8,6 @@
         <file>PACKAGE/actions/qmldir</file>
         <file>PACKAGE/constants/Constants.qml</file>
         <file>PACKAGE/constants/qmldir</file>
-        <file>PACKAGE/adapters/StoreAdapter.qml</file>
-        <file>PACKAGE/adapters/qmldir</file>
         <file>PACKAGE/middlewares/qmldir</file>
         <file>PACKAGE/middlewares/SystemMiddleware.qml</file>
     </qresource>
