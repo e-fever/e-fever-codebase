@@ -10,5 +10,6 @@
         <file>PACKAGE/constants/qmldir</file>
         <file>PACKAGE/middlewares/qmldir</file>
         <file>PACKAGE/middlewares/SystemMiddleware.qml</file>
+        <file>PACKAGE/stores/RootStore.qml</file>
     </qresource>
 </RCC>

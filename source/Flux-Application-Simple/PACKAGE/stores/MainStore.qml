@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQuick 2.0
+import QuickFlux 1.1
 
-QtObject {
-    property string text : "Hello World!"
+RootStore {
+    bindSource: AppDispatcher
 }
