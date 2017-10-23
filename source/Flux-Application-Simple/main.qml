@@ -3,7 +3,6 @@ import QtQuick.Window 2.2
 import QtMultimedia 5.5
 import QtQuick.Controls 1.4
 import PACKAGE.constants 1.0
-import PACKAGE.adapters 1.0
 import PACKAGE.actions 1.0
 import PACKAGE.stores 1.0
 import PACKAGE.middlewares 1.0

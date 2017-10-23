@@ -5,9 +5,20 @@ CONFIG += c++11
 
 QT += quick qml multimedia
 
-include(PROJECT.pri)
-
 SOURCES += main.cpp
+
+SOURCES += $$PWD/appview.cpp
+
+RESOURCES += \
+    $$PWD/PROJECT.qrc
+
+INCLUDEPATH += $$PWD
+
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH += $$PWD
+
+HEADERS += \
+    $$PWD/appview.h
 
 ROOT_DIR = $$PWD
 

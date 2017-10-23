@@ -35,7 +35,7 @@
             ]
         },
         {
-            "pattern": "\\PROJECT.pro$",
+            "pattern": "PROJECT.pro$",
             "openAsProject": true
         }
     ]
