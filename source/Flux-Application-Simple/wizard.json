@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "kind": "project",
+    "id": "EF.QuickFluxProject.3d3725",
+    "category": "EFCodeBase",
+    "trDescription": "Creates a simple Quick Flux based project with qpm packages",
+    "trDisplayName": "Simple Flux Application",
+    "trDisplayCategory": "E-Fever Codebase",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmlProjectManager') >= 0}",
+    "options":
+    [
+        { "key": "ProFileName", "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}" },
+        { "key": "MainQmlFileName", "value": "%{JS: Util.fileName('%{ProjectName}', 'qml')}" },
+        { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
+        { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
+        { "key": "UiSupport", "value": "%{JS: '%{QtQuickVersion}' !== '2.3' }" },
+        { "key": "IsUiFileInUse", "value": "%{JS: %{UiSupport} && %{QmlUiSplit} }" }
+    ],
+
+    "pages":
+    [
+        {
+            "trDisplayName": "Project Location",
+            "trShortTitle": "Location",
+            "typeId": "Project"
+        },
+        {
+            "trDisplayName": "QML Package Information",
+            "trShortTile" : "Package",
+            "typeId" : "Fields",
+            "data": [
+                {
+                    "name": "Package",
+                    "trDisplayName": "QML Package Name",
+                    "mandatory": true,
+                    "type": "LineEdit",
+                    "data": { "validator": "[a-zA-Z][a-zA-Z0-9]*" }
+                }
+            ]
+        },
+
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators":[]
+}

@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>PACKAGE/stores/MainStore.qml</file>
+        <file>PACKAGE/stores/qmldir</file>
+        <file>PACKAGE/actions/AppActions.qml</file>
+        <file>PACKAGE/actions/ActionTypes.qml</file>
+        <file>PACKAGE/actions/qmldir</file>
+        <file>PACKAGE/constants/Constants.qml</file>
+        <file>PACKAGE/constants/qmldir</file>
+        <file>PACKAGE/adapters/StoreAdapter.qml</file>
+        <file>PACKAGE/adapters/qmldir</file>
+        <file>PACKAGE/middlewares/qmldir</file>
+        <file>PACKAGE/middlewares/SystemMiddleware.qml</file>
+    </qresource>
+</RCC>
