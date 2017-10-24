@@ -6,17 +6,29 @@ It is a repository of a collection of Project Wizard used by E-Fever for its ope
 Flux
 ----
 
-Coming soon
+[Full Application(Simple)](Flux-Application-Simple)
 
-Open Source Project
+
+Library Project
 -----
 
-Coming soon
+[Qt/Qml-Library-Project](Qt-Qml-Library-Project)
 
-Misc
+Specification
+
+ 1. .travis.yml
+ 1. appveyor.yml
+ 1. Testable Unit Test 
+ 1. Backtrace on crash (Linux/Mac only)
+
+
+Unit Test
 ----
 
-[Qt-Quick-Unit-Test](https://github.com/e-fever/qt-creator-project-wizards/tree/master/Qt-Quick-Unit-Test)
+[Tesable Unit Itest](Testable-Unit-Test)
+
+
+[Qt-Quick-Unit-Test](Qt-Quick-Unit-Test)
 
 Creates a simple Qt Quick Test based unit test for a set of feature. Unit tests allow you to verify that the code is fit for use and that there have no regressions.
 
