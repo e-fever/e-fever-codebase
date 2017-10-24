@@ -1,0 +1,72 @@
+{
+    "version": 1,
+    "kind": "project",
+    "id": "EF.TestableUnitTests",
+    "category": "EFCodeBase",
+    "trDescription": "Creates a Testable based unit test for C++ and QML features. This project is provided by E-Fever Limited.",
+    "trDisplayName": "Testable Unit Test",
+    "trDisplayCategory": "E-Fever Codebase",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmlProjectManager') >= 0}",
+    "options":
+    [
+        { "key": "ProFileName", "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}" },
+        { "key": "MainQmlFileName", "value": "%{JS: Util.fileName('%{ProjectName}', 'qml')}" },
+        { "key": "QtQuickVersion", "value": "%{JS: %{QtVersion}.qtQuickVersion}" },
+        { "key": "QtQuickWindowVersion", "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}" },
+        { "key": "UiSupport", "value": "%{JS: '%{QtQuickVersion}' !== '2.3' }" },
+        { "key": "IsUiFileInUse", "value": "%{JS: %{UiSupport} && %{QmlUiSplit} }" }
+    ],
+
+    "pages":
+    [
+        {
+            "trDisplayName": "Project Location",
+            "trShortTitle": "Location",
+            "typeId": "Project"
+        },
+
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators":
+    [
+        {
+            "typeId": "File",
+            "data":
+            [
+                {
+                    "source": "app.pro",
+                    "target": "%{ProFileName}",
+                    "openAsProject": true
+                },
+                {
+                    "source": "qpm.json",
+                    "target": "qpm.json"
+                },
+                {
+                    "source": "qmltests/tst_QmlTests.qml",
+                    "target": "qmltests/tst_QmlTests.qml"
+                },
+                {
+                    "source": "tests.h",
+                    "target": "tests.h"
+                },
+                {
+                    "source": "tests.cpp",
+                    "target": "tests.cpp"
+                },
+                {
+                    "source": "main.cpp",
+                    "target": "main.cpp"
+                },
+                {
+                    "source": ".gitignore",
+                    "target": ".gitignore"
+                }
+           ]
+        }
+    ]
+}
