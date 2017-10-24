@@ -1,0 +1,16 @@
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include "appview.h"
+
+int main(int argc, char *argv[])
+{
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    QGuiApplication app(argc, argv);
+    Q_UNUSED(app);
+
+    AppView view;
+    view.start();
+
+    return app.exec();
+}

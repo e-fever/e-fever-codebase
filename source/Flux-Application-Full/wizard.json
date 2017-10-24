@@ -1,0 +1,190 @@
+{
+    "version": 1,
+    "kind": "project",
+    "id": "MT.MultipleTargetProjectQFTA",
+    "category": "EFCodeBase",
+    "trDescription": "Create a project with multiple target. It includes a Qt Quick Application with Quick Flux and a Testable-based project",
+    "trDisplayName": "Flux Application (Full)",
+    "trDisplayCategory": "E-Fever Codebase",
+    "enabled": "%{JS: [ %{Plugins} ].indexOf('QmlProjectManager') >= 0}",
+    "options": [
+        {
+            "key": "ProFileName",
+            "value": "%{JS: Util.fileName('%{ProjectDirectory}/%{ProjectName}', 'pro')}"
+        },
+        {
+            "key": "MainQmlFileName",
+            "value": "%{JS: Util.fileName('%{ProjectName}', 'qml')}"
+        },
+        {
+            "key": "QtQuickVersion",
+            "value": "%{JS: %{QtVersion}.qtQuickVersion}"
+        },
+        {
+            "key": "QtQuickWindowVersion",
+            "value": "%{JS: %{QtVersion}.qtQuickWindowVersion}"
+        },
+        {
+            "key": "UiSupport",
+            "value": "%{JS: '%{QtQuickVersion}' !== '2.3' }"
+        },
+        {
+            "key": "IsUiFileInUse",
+            "value": "%{JS: %{UiSupport} && %{QmlUiSplit} }"
+        },
+        {
+            "key": "TargetPathBaseName",
+            "value": "%{JS: '%{TargetPath}'.split('/').slice(-1)[0]}"
+        }
+    ],
+    "pages": [
+        {
+            "trDisplayName": "Project Location",
+            "trShortTitle": "Location",
+            "typeId": "Project"
+        },
+        {
+            "trDisplayName": "Project Information",
+            "trShortTile": "Package",
+            "typeId": "Fields",
+            "data": [
+                {
+                    "name": "Package",
+                    "trDisplayName": "QML Package Name",
+                    "mandatory": true,
+                    "type": "LineEdit",
+                    "data": {
+                        "trText": "%{JS: '%{TargetPathBaseName}'.charAt(0).toUpperCase() + '%{TargetPathBaseName}'.slice(1)}",
+                        "validator": "[a-zA-Z][a-zA-Z0-9]*"
+                    }
+                }
+            ]
+        },
+        {
+            "trDisplayName": "Project Management",
+            "trShortTitle": "Summary",
+            "typeId": "Summary"
+        }
+    ],
+    "generators": [
+        {
+            "typeId": "File",
+            "data": [
+                {
+                    "source": ".gitignore",
+                    "target": ".gitignore"
+                },
+                {
+                    "source": "app/MYTARGET/appview.cpp",
+                    "target": "app/%{ApplicationProjectName}/appview.cpp"
+                },
+                {
+                    "source": "app/MYTARGET/appview.h",
+                    "target": "app/%{ApplicationProjectName}/appview.h"
+                },
+                {
+                    "source": "app/MYTARGET/deployment.pri",
+                    "target": "app/%{ApplicationProjectName}/deployment.pri"
+                },
+                {
+                    "source": "app/MYTARGET/main.cpp",
+                    "target": "app/%{ApplicationProjectName}/main.cpp"
+                },
+                {
+                    "source": "app/MYTARGET/main.qml",
+                    "target": "app/%{ApplicationProjectName}/main.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/actions/ActionTypes.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/actions/ActionTypes.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/actions/AppActions.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/actions/AppActions.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/actions/qmldir",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/actions/qmldir"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/constants/Constants.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/constants/Constants.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/constants/qmldir",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/constants/qmldir"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/MainWindow.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/MainWindow.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/middlewares/qmldir",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/middlewares/qmldir"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/middlewares/SystemMiddleware.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/middlewares/SystemMiddleware.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/stores/MainStore.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/stores/MainStore.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/stores/qmldir",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/stores/qmldir"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/stores/RootStore.qml",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/stores/RootStore.qml"
+                },
+                {
+                    "source": "app/MYTARGET/MYPACKAGE/uikit/qmldir",
+                    "target": "app/%{ApplicationProjectName}/%{Package}/uikit/qmldir"
+                },
+                {
+                    "source": "app/MYTARGET/MYTARGET.pri",
+                    "target": "app/%{ApplicationProjectName}/%{ApplicationProjectName}.pri"
+                },
+                {
+                    "source": "app/MYTARGET/MYTARGET.pro",
+                    "target": "app/%{ApplicationProjectName}/%{ApplicationProjectName}.pro",
+                    "openAsProject": true
+                },
+                {
+                    "source": "app/MYTARGET/MYTARGET.qrc",
+                    "target": "app/%{ApplicationProjectName}/%{ApplicationProjectName}.qrc"
+                },
+                {
+                    "source": "app/MYTARGET/qpm.json",
+                    "target": "app/%{ApplicationProjectName}/qpm.json"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/main.cpp",
+                    "target": "tests/%{ProjectName}unittests/main.cpp"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/MYPROJECTunittests.pro",
+                    "target": "tests/%{ProjectName}unittests/%{ProjectName}unittests.pro",
+                    "openAsProject": true
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/qmltests/tst_QmlTests.qml",
+                    "target": "tests/%{ProjectName}unittests/qmltests/tst_QmlTests.qml"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/qpm.json",
+                    "target": "tests/%{ProjectName}unittests/qpm.json"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/tests.cpp",
+                    "target": "tests/%{ProjectName}unittests/tests.cpp"
+                },
+                {
+                    "source": "tests/MYPROJECTunittests/tests.h",
+                    "target": "tests/%{ProjectName}unittests/tests.h"
+                }
+            ]
+        }
+    ]
+}
