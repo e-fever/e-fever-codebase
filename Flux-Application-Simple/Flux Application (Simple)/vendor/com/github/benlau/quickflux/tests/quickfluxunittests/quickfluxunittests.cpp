@@ -1,0 +1,370 @@
+#include <QString>
+#include <QtTest>
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QQmlComponent>
+#include <QQmlApplicationEngine>
+#include <QQuickWindow>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QSignalSpy>
+#include <QuickFlux>
+#include <QFAppDispatcher>
+#include <QtShell>
+#include "automator.h"
+#include "quickfluxunittests.h"
+#include "priv/qfsignalproxy.h"
+#include "automator.h"
+#include "actiontypes.h"
+#include "qfactioncreator.h"
+
+QuickFluxUnitTests::QuickFluxUnitTests()
+{
+    // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
+    auto ref = [=]() {
+        QTest::qExec(this, 0, 0);
+    };
+    Q_UNUSED(ref);
+}
+
+void QuickFluxUnitTests::initTestCase()
+{
+}
+
+void QuickFluxUnitTests::cleanupTestCase()
+{
+}
+
+void QuickFluxUnitTests::instance()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///dummy.qml");
+    engine.load(url);
+
+    QObject *rootItem = engine.rootObjects().first();
+
+    QVERIFY(rootItem);
+
+    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&engine);
+    QVERIFY(dispatcher);
+
+    dispatcher->dispatch("TestMessage");
+
+}
+
+void QuickFluxUnitTests::singletonObject()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///dummy.qml");
+    engine.load(url);
+
+    QObject *rootItem = engine.rootObjects().first();
+
+    QVERIFY(rootItem);
+
+    QObject* dummyAction = QFAppDispatcher::singletonObject(&engine,"QuickFluxTests",1,0,"DummyAction");
+
+    QVERIFY(dummyAction);
+    QVERIFY(dummyAction->property("value").toInt() == 13);
+}
+
+void QuickFluxUnitTests::signalProxy()
+{
+
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///dummy.qml");
+    engine.load(url);
+
+    QFSignalProxy proxy;
+
+    const QMetaObject* meta = metaObject();
+
+    int idx = meta->indexOfMethod("dummySignal(int,int)");
+
+    QFAppDispatcher *dispatcher = QFAppDispatcher::instance(&engine);
+
+    QSignalSpy spy(dispatcher,SIGNAL(dispatched(QString,QJSValue)));
+    QVERIFY(spy.count() == 0);
+
+    proxy.bind(this, idx, &engine, dispatcher);
+
+    emit dummySignal(1,999);
+
+    QCOMPARE(spy.count(), 1);
+
+    QVariantList list = spy[0];
+    QVERIFY(list.size() == 2);
+
+    QString type = list.at(0).toString();
+    QVERIFY(type == "dummySignal");
+
+    QJSValue message = list.at(1).value<QJSValue>();
+    QCOMPARE(message.property("v1").toInt(), 1);
+    QCOMPARE(message.property("v2").toInt(), 999);
+
+}
+
+void QuickFluxUnitTests::dispatch_qvariant()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath("qrc:/");
+
+    QUrl url("qrc:///QuickFluxTests/DispatcherTests.qml");
+    engine.load(url);
+
+    Automator automator(&engine);
+
+    QObject* root = automator.findObject("DispatcherTests");
+
+    QVERIFY(root);
+
+    QFAppDispatcher* dispatcher = QFAppDispatcher::instance(&engine);
+    dispatcher->dispatch("test1", QVariant(123));
+
+    QVariantList list = root->property("messages").toList();
+    QCOMPARE(list.count() , 1);
+    QVariantList item = list.at(0).toList();
+    QString type = item.at(0).toString();
+    QVariant v = item.at(1);
+
+    QVERIFY(type == "test1");
+    QCOMPARE(v.toInt(), 123);
+
+    QVariantMap message;
+    message["v1"] = 1;
+    message["v2"] = "2";
+    message["v3"] = 3.0;
+
+    dispatcher->dispatch("test2", message);
+
+    list = root->property("messages").toList();
+    QCOMPARE(list.count() , 2);
+
+    item = list.at(1).toList();
+    type = item.at(0).toString();
+    v = item.at(1);
+
+    QVERIFY(type == "test2");
+    QVERIFY(v.toMap() == message);
+
+}
+
+static void generate(QString package, QString name, QString path, QString header, QString source) {
+
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+    QObject* object = QFAppDispatcher::singletonObject(&engine,package,1,0,name);
+    QVERIFY(object);
+
+    QFKeyTable* keyTable = qobject_cast<QFKeyTable*>(object);
+    QVERIFY(keyTable);
+
+    QFileInfo info;
+    QString filename = path + header;
+
+    info = QFileInfo(filename);
+    QVERIFY(info.exists());
+    QFile file(filename);
+    QVERIFY(file.open(QIODevice::WriteOnly));
+    file.write(keyTable->genHeaderFile(name).toLocal8Bit());
+    file.close();
+
+    filename = path + source;
+    info = QFileInfo(filename);
+    QVERIFY(info.exists());
+    file.setFileName(filename);
+    QVERIFY(file.open(QIODevice::WriteOnly));
+    file.write(keyTable->genSourceFile(name,header).toLocal8Bit());
+    file.close();
+}
+
+void QuickFluxUnitTests::keyTable()
+{
+    // Generate actiontypes.h and actiontypes.cpp from QuickFluxTests/ActionTypes.qml
+
+    qDebug() << SRCDIR;
+
+    QString package = "QuickFluxTests";
+    QString name = "ActionTypes";
+    QString path = SRCDIR;
+    QString header = "actiontypes.h";
+    QString source = "actiontypes.cpp";
+
+    generate(package, name, path, header, source);
+
+    // Just verify the header/source generated by KeyTable
+    QVERIFY(ActionTypes::value1 == "value1");
+    QVERIFY(ActionTypes::value2 == 2);
+    QVERIFY(ActionTypes::value3 == 3.3);
+    QVERIFY(ActionTypes::value4 == true);
+    QVERIFY(ActionTypes::value4b == false);
+    QVERIFY(ActionTypes::value5 == QPointF(5,6));
+    QVERIFY(ActionTypes::value6 == QRectF(6,7,8,9));
+
+}
+
+void QuickFluxUnitTests::actionCreator_genKeyTable()
+{
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+
+    QFActionCreator* actionCreator = qobject_cast<QFActionCreator*>(QFAppDispatcher::singletonObject(&engine, "QuickFluxTests" , 1,0,"AppActions"));
+
+    QVERIFY(actionCreator);
+
+    QString content = actionCreator->genKeyTable();
+
+    QString output = QString(SRCDIR) + "/QuickFluxTests/AppActionsKeyTable.qml";
+
+    QFile file(output);
+
+    QVERIFY(file.open(QIODevice::WriteOnly));
+
+    file.write(content.toLocal8Bit());
+    file.close();
+
+    QObject* keyTable = QFAppDispatcher::singletonObject(&engine, "QuickFluxTests",1,0,"AppActionsKeyTable");
+
+    QVERIFY(keyTable);
+    QVERIFY(keyTable->property("test1").toString() == "test1");
+    QVERIFY(keyTable->property("test2").toString() == "test2");
+}
+
+void QuickFluxUnitTests::actionCreator_changeDispatcher()
+{
+    QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:///");
+
+    QFActionCreator* actionCreator = qobject_cast<QFActionCreator*>(QFAppDispatcher::singletonObject(&engine, "QuickFluxTests" , 1,0,"AppActions"));
+    QVERIFY(actionCreator);
+
+    QFAppDispatcher* globalDispatcher = QFAppDispatcher::instance(&engine);
+
+    QCOMPARE(actionCreator->dispatcher(), globalDispatcher);
+
+    QFAppDispatcher* dispatcher = new QFAppDispatcher(&engine); // local custom dispatcher
+    dispatcher->setEngine(&engine);
+
+    int count = 0;
+    QStringList typeList;
+
+    connect(dispatcher, &QFAppDispatcher::dispatched, [&](QString type, QJSValue message) {
+        Q_UNUSED(message);
+        typeList << type;
+        count++;
+    });
+
+    actionCreator->setDispatcher(dispatcher); // replace by our dispatcher
+
+    QMetaObject::invokeMethod(actionCreator,"test1");
+
+    QCOMPARE(count, 1);
+    QCOMPARE(typeList.size(), 1);
+    QVERIFY(typeList[0] == "test1");
+
+    QMetaObject::invokeMethod(actionCreator,"test2");
+    QCOMPARE(typeList.size(), 2);
+    QVERIFY(typeList[1] == "test2");
+}
+
+void QuickFluxUnitTests::dispatcherHook()
+{
+    QQmlEngine engine;
+    QFAppDispatcher dispatcher;
+    dispatcher.setEngine(&engine);
+
+    int count = 0;
+    QStringList typeList;
+
+    connect(&dispatcher, &QFAppDispatcher::dispatched, [&](QString type, QJSValue message) {
+        Q_UNUSED(message);
+        typeList << type;
+        count++;
+    });
+
+    class Hook1: public QFHook {
+    public:
+        void dispatch(QString type, QJSValue message) {
+            Q_UNUSED(type);
+            Q_UNUSED(message);
+        }
+    };
+
+    Hook1 hook1;
+    dispatcher.setHook(&hook1);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 0);
+
+
+    class Hook2: public QFHook {
+    public:
+        void dispatch(QString type, QJSValue message) {
+            for (int i = 0 ; i < 3;i++) {
+                QMetaObject::invokeMethod(this,"dispatched",Q_ARG(QString, type), Q_ARG(QJSValue, message));
+            }
+        }
+    };
+
+    Hook2 hook2;
+    dispatcher.setHook(&hook2);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 3);
+
+    dispatcher.setHook(0);
+
+    dispatcher.dispatch("action1");
+    QCOMPARE(count, 4);
+
+}
+
+void QuickFluxUnitTests::loading()
+{
+    QFETCH(QString, input);
+
+
+    QQmlEngine engine;
+    engine.addImportPath("qrc:///");
+
+
+    QQmlComponent comp(&engine);
+    comp.loadUrl(QUrl(input));
+
+    if (comp.isError()) {
+        qDebug() << QString("%1 : Load Failed. Reason :  %2").arg(input).arg(comp.errorString());
+    }
+    QVERIFY(!comp.isError());
+
+}
+
+void QuickFluxUnitTests::loading_data()
+{
+    QTest::addColumn<QString>("input");
+    QStringList files;
+    files << QtShell::find(QString(SRCDIR) + "../../examples" , "*.qml");
+
+    foreach (QString file , files) {
+        QString content = QtShell::cat(file);
+        content = content.toLower();
+
+        if (content.indexOf("pragma singleton") != -1) {
+            continue;
+        }
+
+        QTest::newRow(QtShell::basename(file).toLocal8Bit().constData()) << file;
+    }
+
+
+}
+
