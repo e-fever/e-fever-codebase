@@ -8,7 +8,11 @@ It is a repository of a collection of Project Wizard used by E-Fever for its ope
 Flux
 ----
 
-[Full Application(Simple)](Flux-Application-Simple)
+[Flux Application(Simple)](Flux-Application-Simple)
+
+Flux Application (Full)
+
+Coming soon
 
 
 Library Project
