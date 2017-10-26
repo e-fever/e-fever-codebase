@@ -10,15 +10,23 @@ Flux
 
 [Flux Application(Simple)](Flux-Application-Simple)
 
-Flux Application (Full)
+Creates a simple Quick Flux based project with qpm packages
 
-Coming soon
+Specification
+
+1. Quick Flux
+2. Backtrace on crash (Linux/Mac only)
+3. QPM
+
+[Flux Application(Full)](Flux-Application-Full)
 
 
 Library Project
 -----
 
 [Qt/Qml-Library-Project](Qt-Qml-Library-Project)
+
+Creates a library project with Testable
 
 Specification
 
@@ -33,6 +41,15 @@ Unit Test
 
 [Tesable Unit Itest](Testable-Unit-Test)
 
+Creates a Testable based unit test for C++ and QML features.
+
+Specification
+
+1. Qt Test
+2. Qt Quick Test
+3. Testable
+4. Backtrace on crash (Linux/Mac only)
+5. QPM packages
 
 [Qt-Quick-Unit-Test](Qt-Quick-Unit-Test)
 
