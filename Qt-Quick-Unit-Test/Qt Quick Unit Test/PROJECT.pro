@@ -13,6 +13,7 @@ SOURCES += \\
     main.cpp
 
 DEFINES += SRCDIR=\\\\\\"$$PWD/\\\\\\"
+DEFINES += TEST_SOURCE_DIR=\\\\\\"$$PWD\\\\\\"
 
 DISTFILES += \\
     tst_Sample.qml

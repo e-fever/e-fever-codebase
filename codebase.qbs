@@ -1,5 +1,5 @@
 import qbs
-import qbs.File 1.0
+import qbs.File
 
 Project {
     id: project

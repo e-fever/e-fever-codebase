@@ -31,5 +31,5 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-    return quick_test_main(argc, argv, "%{ProjectName}", QUICK_TEST_SOURCE_DIR);
+    return quick_test_main(argc, argv, "%{ProjectName}", TEST_SOURCE_DIR);
 }
