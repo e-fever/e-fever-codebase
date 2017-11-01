@@ -3,8 +3,8 @@
     "kind": "project",
     "id": "EF.QuickFluxProject.3d3725",
     "category": "EFCodeBase",
-    "trDescription": "Creates a simple Quick Flux based project with qpm packages",
-    "trDisplayName": "Flux Application (Simple)",
+    "trDescription": "Creates a minimal Quick Flux based project with qpm packages. No unit test.",
+    "trDisplayName": "Flux Application (Minimal)",
     "trDisplayCategory": "E-Fever Codebase",
     "enabled": "%{JS: [ %{Plugins} ].indexOf('QmlProjectManager') >= 0}",
     "options":

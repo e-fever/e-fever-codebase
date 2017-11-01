@@ -4,7 +4,7 @@ import qbs.File
 
 Product {
     id: qtcwizard
-    name: "Flux Application (Simple)"
+    name: "Flux Application (Minimal)"
     type: ["script"]
     
     Rule {
@@ -67,7 +67,7 @@ Product {
                     return res;
                 }
 
-                install(product.sourceDirectory + "/Flux Application (Simple)"  , obtainInstallationPath() + "/Flux Application (Simple)");
+                install(product.sourceDirectory + "/Flux Application (Minimal)"  , obtainInstallationPath() + "/Flux Application (Minimal)");
             }
 
             cmd.description = "Installing...";
