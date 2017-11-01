@@ -8,9 +8,9 @@ It is a repository of a collection of Project Wizard used by E-Fever for its ope
 Flux
 ----
 
-[Flux Application(Minimual)](Flux-Application-Minimual)
+[Flux Application (Minimal)](Flux-Application-Minimal)
 
-Creates a minimual Quick Flux based project with qpm packages
+Creates a minimal Quick Flux based project with qpm packages
 
 Specification
 
@@ -18,17 +18,6 @@ Specification
 2. Backtrace on crash (Linux/Mac only)
 3. QPM
 4. No unit test
-
-[Flux Application(Full)](Flux-Application-Full)
-
-Creates a full Quick Flux based project with qpm packages
-
-Specification
-
-1. Quick Flux
-2. Backtrace on crash (Linux/Mac only)
-3. QPM
-4. Testable unit test project
 
 ```
 .
@@ -57,6 +46,19 @@ Specification
 └── qpm.json
 
 ```
+
+[Flux Application(Full)](Flux-Application-Full)
+
+Creates a full Quick Flux based project with qpm packages
+
+Specification
+
+1. Quick Flux
+2. Backtrace on crash (Linux/Mac only)
+3. QPM
+4. Testable unit test project
+
+
 
 Library Project
 -----
