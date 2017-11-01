@@ -8,18 +8,55 @@ It is a repository of a collection of Project Wizard used by E-Fever for its ope
 Flux
 ----
 
-[Flux Application(Simple)](Flux-Application-Simple)
+[Flux Application(Minimual)](Flux-Application-Minimual)
 
-Creates a simple Quick Flux based project with qpm packages
+Creates a minimual Quick Flux based project with qpm packages
 
 Specification
 
 1. Quick Flux
 2. Backtrace on crash (Linux/Mac only)
 3. QPM
+4. No unit test
 
 [Flux Application(Full)](Flux-Application-Full)
 
+Creates a full Quick Flux based project with qpm packages
+
+Specification
+
+1. Quick Flux
+2. Backtrace on crash (Linux/Mac only)
+3. QPM
+4. Testable unit test project
+
+```
+.
+├── PACKAGE
+│   ├── actions
+│   │   ├── ActionTypes.qml
+│   │   ├── AppActions.qml
+│   │   └── qmldir
+│   ├── constants
+│   │   ├── Constants.qml
+│   │   └── qmldir
+│   ├── middlewares
+│   │   ├── SystemMiddleware.qml
+│   │   └── qmldir
+│   └── stores
+│       ├── MainStore.qml
+│       ├── RootStore.qml
+│       └── qmldir
+├── PROJECT.pro
+├── PROJECT.qrc
+├── appview.cpp
+├── appview.h
+├── deployment.pri
+├── main.cpp
+├── main.qml
+└── qpm.json
+
+```
 
 Library Project
 -----
@@ -68,4 +105,15 @@ Files:
 ├── %{ProjectName}.pro
 ├── main.cpp
 └── tst_Sample.qml
+```
+
+Installation
+============
+
+To install individual project, open the folder and follow the instructions
+
+To install all the project templates, run command:
+
+```
+    $ qbs
 ```
