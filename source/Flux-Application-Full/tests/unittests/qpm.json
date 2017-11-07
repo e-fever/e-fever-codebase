@@ -3,7 +3,10 @@
   "description": "",
   "dependencies": [
     "com.github.benlau.testable@1.0.2.19",
-    "com.github.benlau.qtshell@0.4.2"
+    "com.github.benlau.qtshell@0.4.3",
+    "async.future.pri@0.3.6.4",
+    "net.efever.aconcurrent@0.1.13",
+    "net.efever.snapshottesting@0.0.15"
   ],
   "license": "NONE",
   "pri_filename": "",

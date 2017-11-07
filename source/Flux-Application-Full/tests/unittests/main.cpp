@@ -2,6 +2,7 @@
 #include <QtTest>
 #include <TestRunner>
 #include <QtQuickTest/quicktest.h>
+#include <snapshottesting.h>
 #include "tests.h"
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
@@ -32,6 +33,8 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
+
+    SnapshotTesting::setSnapshotsFile(QString(SRCDIR) + "/snapshot.json");
 
     TestRunner runner;
     runner.addImportPath("qrc:///");

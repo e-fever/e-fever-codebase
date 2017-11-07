@@ -10,5 +10,8 @@ public:
 private slots:
     void test_qml_loading();
     void test_qml_loading_data();
+
+    void test_Snapshot();
+    void test_Snapshot_data();
 };
 

@@ -22,20 +22,20 @@ Specification
 ```
 .
 ├── PACKAGE
-│   ├── actions
-│   │   ├── ActionTypes.qml
-│   │   ├── AppActions.qml
-│   │   └── qmldir
-│   ├── constants
-│   │   ├── Constants.qml
-│   │   └── qmldir
-│   ├── middlewares
-│   │   ├── SystemMiddleware.qml
-│   │   └── qmldir
-│   └── stores
-│       ├── MainStore.qml
-│       ├── RootStore.qml
-│       └── qmldir
+│   ├── actions
+│   │   ├── ActionTypes.qml
+│   │   ├── AppActions.qml
+│   │   └── qmldir
+│   ├── constants
+│   │   ├── Constants.qml
+│   │   └── qmldir
+│   ├── middlewares
+│   │   ├── SystemMiddleware.qml
+│   │   └── qmldir
+│   └── stores
+│       ├── MainStore.qml
+│       ├── RootStore.qml
+│       └── qmldir
 ├── PROJECT.pro
 ├── PROJECT.qrc
 ├── appview.cpp
@@ -57,8 +57,7 @@ Specification
 2. Backtrace on crash (Linux/Mac only)
 3. QPM
 4. Testable unit test project
-
-
+ 1. SnapshotTesting
 
 Library Project
 -----
