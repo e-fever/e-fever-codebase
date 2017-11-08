@@ -19,3 +19,5 @@ DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD/\\\"
 DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml
 
 HEADERS +=     tests.h
+
+write_file(../../qmlimport.path, QML_IMPORT_PATH)
