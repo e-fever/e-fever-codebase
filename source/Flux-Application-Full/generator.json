@@ -4,7 +4,8 @@
         "\\.DS_Store$",
         "\\.pro.user$",
         "\\.qmlc$",
-        "\\.jsc$"
+        "\\.jsc$",
+        "qmlimport.path"
     ],
     "rules": [
         {

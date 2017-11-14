@@ -896,10 +896,6 @@
                     "openAsProject": true
                 },
                 {
-                    "source": "qmlimport.path",
-                    "target": "qmlimport.path"
-                },
-                {
                     "source": "README.md",
                     "target": "README.md"
                 },
