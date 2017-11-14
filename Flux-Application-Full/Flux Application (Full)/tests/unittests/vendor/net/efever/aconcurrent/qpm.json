@@ -1,0 +1,23 @@
+{
+  "name": "net.efever.aconcurrent",
+  "description": "Enhanced QtConcurrent with AsyncFuture",
+  "author": {
+    "name": "Ben Lau",
+    "email": "benlau@e-fever.net"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "git@github.com:e-fever/aconcurrent.git"
+  },
+  "version": {
+    "label": "0.1.13",
+    "revision": "",
+    "fingerprint": ""
+  },
+  "dependencies": [
+    "async.future.pri@0.3.6.4"
+  ],
+  "license": "APACHE_2_0",
+  "pri_filename": "aconcurrent.pri",
+  "webpage": ""
+}

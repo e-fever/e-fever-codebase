@@ -1,0 +1,6 @@
+{
+    "content": {
+        "test_Snapshot/SystemMiddleware.qml": "Middleware { // SystemMiddleware\\n}",
+        "test_Snapshot/main.qml": "Item { // main\\n    id: main\\n\\n    Item {\\n        id: middleware\\n\\n        SystemMiddleware {\\n        }\\n    }\\n}"
+    }
+}

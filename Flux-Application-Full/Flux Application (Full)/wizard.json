@@ -896,6 +896,10 @@
                     "openAsProject": true
                 },
                 {
+                    "source": "qmlimport.path",
+                    "target": "qmlimport.path"
+                },
+                {
                     "source": "README.md",
                     "target": "README.md"
                 },
@@ -912,6 +916,10 @@
                     "target": "tests/unittests/qpm.json"
                 },
                 {
+                    "source": "tests/unittests/snapshot.json",
+                    "target": "tests/unittests/snapshot.json"
+                },
+                {
                     "source": "tests/unittests/tests.cpp",
                     "target": "tests/unittests/tests.cpp"
                 },
@@ -924,12 +932,116 @@
                     "target": "tests/unittests/unittests.pro"
                 },
                 {
+                    "source": "tests/unittests/vendor/async/future/pri/.gitignore",
+                    "target": "tests/unittests/vendor/async/future/pri/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/.travis.yml",
+                    "target": "tests/unittests/vendor/async/future/pri/.travis.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/appveyor.yml",
+                    "target": "tests/unittests/vendor/async/future/pri/appveyor.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/asyncfuture.h",
+                    "target": "tests/unittests/vendor/async/future/pri/asyncfuture.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/asyncfuture.pri",
+                    "target": "tests/unittests/vendor/async/future/pri/asyncfuture.pri"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/asyncfuture.pro",
+                    "target": "tests/unittests/vendor/async/future/pri/asyncfuture.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/LICENSE",
+                    "target": "tests/unittests/vendor/async/future/pri/LICENSE"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/qpm.json",
+                    "target": "tests/unittests/vendor/async/future/pri/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/README.md",
+                    "target": "tests/unittests/vendor/async/future/pri/README.md"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/.gitignore",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfuturetests.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfuturetests.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfuturetests.h",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfuturetests.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfutureunittests.pro",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfutureunittests.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/bugtests.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/bugtests.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/bugtests.h",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/bugtests.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/example.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/example.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/example.h",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/example.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/main.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/main.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/qpm.json",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/testfunctions.h",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/testfunctions.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/.gitignore",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.pro",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/main.cpp",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/main.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/README.md",
+                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/README.md"
+                },
+                {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore",
                     "target": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/.travis.yml",
                     "target": "tests/unittests/vendor/com/github/benlau/qtshell/.travis.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/com/github/benlau/qtshell/appveyor.yml",
+                    "target": "tests/unittests/vendor/com/github/benlau/qtshell/appveyor.yml"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/LICENSE",
@@ -1302,6 +1414,286 @@
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/window.qml",
                     "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/window.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/.gitignore",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/.travis.yml",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/.travis.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.cpp",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.h",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.pri",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.pri"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.pro",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/aconcurrent.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/appveyor.yml",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/appveyor.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/LICENSE",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/LICENSE"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/qpm.json",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/README.md",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/README.md"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/.gitignore",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.cpp",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.h",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrentunittests.pro",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrentunittests.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/main.cpp",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/main.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/qpm.json",
+                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/.gitignore",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/.travis.yml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/.travis.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/appveyor.yml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/appveyor.yml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Diff.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Diff.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Diff3.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Diff3.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/dtl.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/dtl.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/functors.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/functors.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Lcs.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Lcs.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Sequence.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Sequence.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Ses.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/Ses.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/dtl/variables.hpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/dtl/variables.hpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/CustomItem.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/CustomItem.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/exmaple1.pro",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/exmaple1.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/main.cpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/main.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/README.md",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/README.md"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/tst_demo1.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/examples/example1/tst_demo1.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/LICENSE",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/LICENSE"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/private/snapshottesting_p.h",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/private/snapshottesting_p.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/qpm.json",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/README.md",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/README.md"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshots.json",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshots.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.cpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.h",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.pri",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.pri"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.pro",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.qrc",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottesting.qrc"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/config/snapshot-config.json",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/config/snapshot-config.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/Matcher.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/Matcher.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/MatcherContentView.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/MatcherContentView.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/qmldir",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/qmldir"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/SnapshotTesting.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/SnapshotTesting/SnapshotTesting.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.cpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.h",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.h"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/.gitignore",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/.gitignore"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/main.cpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/main.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/qmltests/tst_SnapshotTesting.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/qmltests/tst_SnapshotTesting.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/qpm.json",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/qpm.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/red-100x100.png",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/red-100x100.png"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample_Loader_Async.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample_Loader_Async.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample_QJSValue.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample_QJSValue.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample1.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample1.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample2.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample2.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample3.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample3.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample4.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample4.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample5.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample5.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample5Form.ui.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample5Form.ui.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample6.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample6.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample7.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample7.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample8.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample8.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample9.qml",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/sample/Sample9.qml"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshots.json",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshots.json"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottestingunittests.pro",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottestingunittests.pro"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottests.cpp",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottests.cpp"
+                },
+                {
+                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottests.h",
+                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/snapshottests.h"
                 },
                 {
                     "source": "tests/unittests/vendor/vendor.pri",

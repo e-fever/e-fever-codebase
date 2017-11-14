@@ -17,6 +17,16 @@ QtShellTests::QtShellTests(QObject *parent) : QObject(parent)
     Q_UNUSED(ref);
 }
 
+#define PRINT(x) qDebug() << #x << (x);
+
+void QtShellTests::system_info()
+{
+    PRINT(QFileInfo("C:/temp").isAbsolute());
+    PRINT(QFileInfo(":/temp").isAbsolute());
+
+    PRINT(QUrl("file:///C:/temp").path());
+}
+
 void QtShellTests::test_normalize()
 {
     QVERIFY(normalize("/tmp") == "/tmp");
@@ -26,15 +36,18 @@ void QtShellTests::test_normalize()
 
 void QtShellTests::test_canonicalPath()
 {
-    QVERIFY(canonicalPath("/tmp") == "/tmp");
-    QVERIFY(canonicalPath("/tmp/") == "/tmp");
-    QVERIFY(canonicalPath("/tmp//subdir") == "/tmp/subdir");
-    QVERIFY(canonicalPath("//tmp///subdir/") == "/tmp/subdir");
+    QVERIFY(canonicalPath("/tmp", false) == "/tmp");
+    QVERIFY(canonicalPath("/tmp/", false) == "/tmp");
+    QVERIFY(canonicalPath("/tmp//subdir", false) == "/tmp/subdir");
+    QVERIFY(canonicalPath("//tmp///subdir/", false) == "/tmp/subdir");
 
-    QVERIFY(canonicalPath("//tmp/../subdir/") == "/subdir");
+    QVERIFY(canonicalPath("//tmp/../subdir/", false) == "/subdir");
 
-    QVERIFY(canonicalPath("//tmp/../../subdir/") == "/subdir");
-    QVERIFY(canonicalPath("//tmp/./subdir/") == "/tmp/subdir");
+    QVERIFY(canonicalPath("//tmp/../../subdir/", false) == "/subdir");
+    QVERIFY(canonicalPath("//tmp/./subdir/", false) == "/tmp/subdir");
+
+    QCOMPARE(canonicalPath("C:/temp", true),  QString("C:/temp"));
+    QCOMPARE(canonicalPath("/C:/temp", true),  QString("C:/temp"));
 
 }
 
@@ -415,34 +428,35 @@ void QtShellTests::test_mv()
 
 void QtShellTests::test_realpath_strip()
 {
-    QVERIFY(QtShell::realpath_strip(":tmp") ==  ":tmp");
-    QVERIFY(QtShell::realpath_strip(":/tmp") == ":/tmp");
+    QCOMPARE(QtShell::realpath_strip(QtShell::pwd()),  QtShell::pwd());
 
-    QVERIFY(QtShell::realpath_strip("tmp") ==  (QtShell::pwd() + "/tmp"));
+    QCOMPARE(QtShell::realpath_strip(":tmp"),  QString(":tmp"));
+    QCOMPARE(QtShell::realpath_strip(":/tmp"), QString(":/tmp"));
 
-    QVERIFY(QtShell::realpath_strip("tmp/") ==  (QtShell::pwd() + "/tmp"));
+    QCOMPARE(QtShell::realpath_strip("tmp"),  (QtShell::pwd() + "/tmp"));
 
-    QVERIFY(QtShell::realpath_strip("tmp/../") ==  (QtShell::pwd()));
+    QCOMPARE(QtShell::realpath_strip("tmp/"),  (QtShell::pwd() + "/tmp"));
 
-    QVERIFY(QtShell::realpath_strip("tmp","subdir1") ==  (QtShell::pwd() + "/tmp/subdir1"));
+    QCOMPARE(QtShell::realpath_strip("tmp/../"),  (QtShell::pwd()));
 
-    QVERIFY(QtShell::realpath_strip("tmp","subdir1","subdir2") ==  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
+    QCOMPARE(QtShell::realpath_strip("tmp","subdir1"),  (QtShell::pwd() + "/tmp/subdir1"));
 
-    QVERIFY(QtShell::realpath_strip("tmp","/subdir1","subdir2") ==  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
+    QCOMPARE(QtShell::realpath_strip("tmp","subdir1","subdir2"),  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
 
-    QVERIFY(QtShell::realpath_strip("tmp","/subdir1/","subdir2") ==  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
+    QCOMPARE(QtShell::realpath_strip("tmp","/subdir1","subdir2"),  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
 
-    QVERIFY(QtShell::realpath_strip("tmp","/subdir1/","../subdir2") ==  (QtShell::pwd() + "/tmp/subdir2"));
+    QCOMPARE(QtShell::realpath_strip("tmp","/subdir1/","subdir2"),  (QtShell::pwd() + "/tmp/subdir1/subdir2"));
 
-    QVERIFY(QtShell::realpath_strip(QtShell::pwd()) ==  (QtShell::pwd()));
+    QCOMPARE(QtShell::realpath_strip("tmp","/subdir1/","../subdir2"),  (QtShell::pwd() + "/tmp/subdir2"));
 
-    QUrl url(QtShell::pwd());
-    url.setScheme("file");
+    QCOMPARE(QtShell::realpath_strip(QtShell::pwd()),  (QtShell::pwd()));
 
-    QVERIFY(QtShell::realpath_strip(url.toString()) == QtShell::pwd());
+    QUrl url = QUrl::fromLocalFile(QtShell::pwd());
+    qDebug() << url;
 
-    url.setScheme("qrc");
-    QVERIFY(QtShell::realpath_strip(url.toString()) == (QString(":") + QtShell::pwd()));
+    QCOMPARE(QtShell::realpath_strip(url.toString()), QtShell::pwd());
+
+    QCOMPARE(QtShell::realpath_strip("qrc:/tmp1.txt"), QString(":/tmp1.txt"));
 
 }
 

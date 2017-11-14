@@ -1,0 +1,11 @@
+{
+  "name": "",
+  "description": "",
+  "dependencies": [
+    "com.github.benlau.testable@1.0.2.19",
+    "async.future.pri@0.3.6.3"
+  ],
+  "license": "NONE",
+  "pri_filename": "",
+  "webpage": ""
+}

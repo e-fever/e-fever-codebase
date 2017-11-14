@@ -1,0 +1,25 @@
+{
+  "name": "net.efever.snapshottesting",
+  "description": "Snapshot Testing",
+  "author": {
+    "name": "Ben Lau",
+    "email": "xbenlau@gmail.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "git@github.com:e-fever/snapshottesting.git"
+  },
+  "version": {
+    "label": "0.0.15",
+    "revision": "",
+    "fingerprint": ""
+  },
+  "dependencies": [
+    "com.github.benlau.qtshell@0.4.3",
+    "async.future.pri@0.3.6.4",
+    "net.efever.aconcurrent@0.1.13"
+  ],
+  "license": "APACHE_2_0",
+  "pri_filename": "snapshottesting.pri",
+  "webpage": ""
+}

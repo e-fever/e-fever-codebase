@@ -1,6 +1,10 @@
 QtShell - Manipulate files by a shell command style API
 ===============================================
 
+[![Build Status](https://www.travis-ci.org/benlau/qtshell.svg?branch=master)](https://www.travis-ci.org/benlau/qtshell)
+[![Build status](https://ci.appveyor.com/api/projects/status/2qry21dualt0t9xe?svg=true)](https://ci.appveyor.com/project/benlau/qtshell)
+
+
 QtShell is a Qt library that provides a set of file manipulation API in shell command style.
 
 Example Usages
@@ -207,3 +211,23 @@ Example
     mv("src/*.txt","target");
 
     mv("src/1.txt","target/2,txt");
+    
+realpath_strip
+--------------
+
+    QString realpath_strip(...);
+
+Implementation of `realpath --strip` which prints the canonicalized absolute path (remove "." & "..") of input path without expanding the symbolic link.
+
+`realpath_strip` supports variadic arguments. It joins all the input path by "/"  then produces the output.
+
+Example
+
+    realpath_strip("tmp/subdir"); // pwd() + "/tmp/subdir";
+    realpath_strip("/tmp", "subdir1", "/subdir2/"); // "/tmp/subdir1/subdir2"
+    realpath_strip("/tmp", "subdir1", "..//subdir2/"); // "/tmp/subdir2"
+    realpath_strip("file:///tmp1"); // "/tmp1"
+    realpath_strip("qrc:///tmp1"); // ":/tmp1"
+
+
+
