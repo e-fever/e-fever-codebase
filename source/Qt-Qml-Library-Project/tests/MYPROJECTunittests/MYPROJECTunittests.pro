@@ -19,3 +19,7 @@ include($$ROOTDIR/MYPROJECT.pri)
 DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml
 
 HEADERS +=     tests.h
+
+!win32 {
+    QMAKE_CXXFLAGS += -Werror
+}
