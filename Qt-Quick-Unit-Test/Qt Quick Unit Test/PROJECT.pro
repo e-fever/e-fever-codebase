@@ -7,7 +7,11 @@ CONFIG += warn_on qmltestcase
 
 TEMPLATE = app
 
-IMPORTPATH = $$PWD
+QML_IMPORT_PATH += $$PWD
+
+!win32 {
+    QMAKE_CXXFLAGS += -Werror
+}
 
 SOURCES += \\
     main.cpp
