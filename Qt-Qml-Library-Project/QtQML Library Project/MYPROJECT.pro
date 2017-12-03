@@ -2,4 +2,4 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += tests/%{ProjectName}unittests
+SUBDIRS += tests/unittests
