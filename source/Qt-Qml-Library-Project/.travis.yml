@@ -20,5 +20,5 @@ script:
     - source qt-5.7.env
     - mkdir build
     - cd build
-    - run-unittests ../tests/MYPROJECTunittests/MYPROJECTunittests.pro
+    - run-unittests ../tests/unittests/unittests.pro
 
