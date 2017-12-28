@@ -36,5 +36,6 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user
 *.qmlc
+*.jsc
 vendor
 *.swp
