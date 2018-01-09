@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
     signal(SIGSEGV, handleBacktrace);
 #endif
+    qputenv("QML_DISABLE_DISK_CACHE", "true");
 
     QGuiApplication app(argc, argv);
 
@@ -40,15 +41,6 @@ int main(int argc, char *argv[])
     runner.addImportPath("qrc:///");
     runner.add<Tests>();
     runner.add(QString(SRCDIR) + "qmltests");
-
-    int waitTime = 100;
-    if (app.arguments().size() != 1) {
-        waitTime = 60000;
-    }
-
-    QVariantMap config;
-    config["waitTime"] = waitTime;
-    runner.setConfig(config);
 
     bool error = runner.exec(app.arguments());
 
