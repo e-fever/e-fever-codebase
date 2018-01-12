@@ -111,10 +111,6 @@
                     "target": "tests/unittests/unittests.pro"
                 },
                 {
-                    "source": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/.travis.yml",
                     "target": "tests/unittests/vendor/com/github/benlau/qtshell/.travis.yml"
                 },
@@ -185,10 +181,6 @@
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/tests/qtshellunittests/resource.qrc",
                     "target": "tests/unittests/vendor/com/github/benlau/qtshell/tests/qtshellunittests/resource.qrc"
-                },
-                {
-                    "source": "tests/unittests/vendor/com/github/benlau/testable/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/testable/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/.travis.yml",
@@ -437,10 +429,6 @@
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testablecmdtests/tst_Testable.qml",
                     "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testablecmdtests/tst_Testable.qml"
-                },
-                {
-                    "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/AutomatorCreateTracker.qml",

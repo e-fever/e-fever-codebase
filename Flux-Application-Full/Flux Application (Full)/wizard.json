@@ -159,10 +159,6 @@
                     "target": "app/%{ProjectName}/qpm.json"
                 },
                 {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/.gitignore"
-                },
-                {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/.travis.yml",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/.travis.yml"
                 },
@@ -201,10 +197,6 @@
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/docs/quickflux.qdocconf",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/docs/quickflux.qdocconf"
-                },
-                {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/middleware/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/middleware/.gitignore"
                 },
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/middleware/actions/ActionTypes.qml",
@@ -279,10 +271,6 @@
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/middleware/views/StackView.qml"
                 },
                 {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/photoalbum/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/photoalbum/.gitignore"
-                },
-                {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/photoalbum/actions/ActionTypes.qml",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/photoalbum/actions/ActionTypes.qml"
                 },
@@ -345,10 +333,6 @@
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/README.md",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/README.md"
-                },
-                {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/todo/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/examples/todo/.gitignore"
                 },
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/examples/todo/actions/ActionTypes.qml",
@@ -635,10 +619,6 @@
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/README.md"
                 },
                 {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/.gitignore"
-                },
-                {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/app.pri",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/app.pri"
                 },
@@ -725,10 +705,6 @@
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/README.md",
                     "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/templates/quickflux-project-template/README.md"
-                },
-                {
-                    "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/tests/quickfluxunittests/.gitignore",
-                    "target": "app/%{ProjectName}/vendor/com/github/benlau/quickflux/tests/quickfluxunittests/.gitignore"
                 },
                 {
                     "source": "app/MYPROJECT/vendor/com/github/benlau/quickflux/tests/quickfluxunittests/actiontypes.cpp",
@@ -928,10 +904,6 @@
                     "target": "tests/unittests/unittests.pro"
                 },
                 {
-                    "source": "tests/unittests/vendor/async/future/pri/.gitignore",
-                    "target": "tests/unittests/vendor/async/future/pri/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/async/future/pri/.travis.yml",
                     "target": "tests/unittests/vendor/async/future/pri/.travis.yml"
                 },
@@ -962,10 +934,6 @@
                 {
                     "source": "tests/unittests/vendor/async/future/pri/README.md",
                     "target": "tests/unittests/vendor/async/future/pri/README.md"
-                },
-                {
-                    "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/.gitignore",
-                    "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/asyncfuturetests.cpp",
@@ -1008,10 +976,6 @@
                     "target": "tests/unittests/vendor/async/future/pri/tests/asyncfutureunittests/testfunctions.h"
                 },
                 {
-                    "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/.gitignore",
-                    "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.cpp",
                     "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/compilererrors.cpp"
                 },
@@ -1026,10 +990,6 @@
                 {
                     "source": "tests/unittests/vendor/async/future/pri/tests/compilererrors/README.md",
                     "target": "tests/unittests/vendor/async/future/pri/tests/compilererrors/README.md"
-                },
-                {
-                    "source": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/qtshell/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/.travis.yml",
@@ -1106,10 +1066,6 @@
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/qtshell/tests/qtshellunittests/resource.qrc",
                     "target": "tests/unittests/vendor/com/github/benlau/qtshell/tests/qtshellunittests/resource.qrc"
-                },
-                {
-                    "source": "tests/unittests/vendor/com/github/benlau/testable/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/testable/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/.travis.yml",
@@ -1360,10 +1316,6 @@
                     "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testablecmdtests/tst_Testable.qml"
                 },
                 {
-                    "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/.gitignore",
-                    "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/AutomatorCreateTracker.qml",
                     "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/AutomatorCreateTracker.qml"
                 },
@@ -1412,10 +1364,6 @@
                     "target": "tests/unittests/vendor/com/github/benlau/testable/tests/testableunittests/window.qml"
                 },
                 {
-                    "source": "tests/unittests/vendor/net/efever/aconcurrent/.gitignore",
-                    "target": "tests/unittests/vendor/net/efever/aconcurrent/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/net/efever/aconcurrent/.travis.yml",
                     "target": "tests/unittests/vendor/net/efever/aconcurrent/.travis.yml"
                 },
@@ -1452,10 +1400,6 @@
                     "target": "tests/unittests/vendor/net/efever/aconcurrent/README.md"
                 },
                 {
-                    "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/.gitignore",
-                    "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/.gitignore"
-                },
-                {
                     "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.cpp",
                     "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/aconcurrenttests.cpp"
                 },
@@ -1474,10 +1418,6 @@
                 {
                     "source": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/qpm.json",
                     "target": "tests/unittests/vendor/net/efever/aconcurrent/tests/aconcurrentunittests/qpm.json"
-                },
-                {
-                    "source": "tests/unittests/vendor/net/efever/snapshottesting/.gitignore",
-                    "target": "tests/unittests/vendor/net/efever/snapshottesting/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/net/efever/snapshottesting/.travis.yml",
@@ -1606,10 +1546,6 @@
                 {
                     "source": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.h",
                     "target": "tests/unittests/vendor/net/efever/snapshottesting/snapshottestingadapter.h"
-                },
-                {
-                    "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/.gitignore",
-                    "target": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/.gitignore"
                 },
                 {
                     "source": "tests/unittests/vendor/net/efever/snapshottesting/tests/snapshottestingunittests/main.cpp",

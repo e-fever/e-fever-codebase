@@ -79,10 +79,6 @@
                     "target": "tests.h"
                 },
                 {
-                    "source": "vendor/com/github/benlau/testable/.gitignore",
-                    "target": "vendor/com/github/benlau/testable/.gitignore"
-                },
-                {
                     "source": "vendor/com/github/benlau/testable/.travis.yml",
                     "target": "vendor/com/github/benlau/testable/.travis.yml"
                 },
@@ -335,10 +331,6 @@
                     "target": "vendor/com/github/benlau/testable/tests/testablecmdtests/tst_Testable.qml"
                 },
                 {
-                    "source": "vendor/com/github/benlau/testable/tests/testableruntests/.gitignore",
-                    "target": "vendor/com/github/benlau/testable/tests/testableruntests/.gitignore"
-                },
-                {
                     "source": "vendor/com/github/benlau/testable/tests/testableruntests/gallerytests.cpp",
                     "target": "vendor/com/github/benlau/testable/tests/testableruntests/gallerytests.cpp"
                 },
@@ -353,10 +345,6 @@
                 {
                     "source": "vendor/com/github/benlau/testable/tests/testableruntests/testableruntests.pro",
                     "target": "vendor/com/github/benlau/testable/tests/testableruntests/testableruntests.pro"
-                },
-                {
-                    "source": "vendor/com/github/benlau/testable/tests/testableunittests/.gitignore",
-                    "target": "vendor/com/github/benlau/testable/tests/testableunittests/.gitignore"
                 },
                 {
                     "source": "vendor/com/github/benlau/testable/tests/testableunittests/AutomatorCreateTracker.qml",
