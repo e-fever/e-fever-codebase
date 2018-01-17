@@ -16,7 +16,8 @@ ROOTDIR = $$PWD/../../
 include(vendor/vendor.pri)
 include($$ROOTDIR/MYPROJECT.pri)
 
-DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml
+DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml \
+    ../../README.md
 
 HEADERS +=     tests.h
 
