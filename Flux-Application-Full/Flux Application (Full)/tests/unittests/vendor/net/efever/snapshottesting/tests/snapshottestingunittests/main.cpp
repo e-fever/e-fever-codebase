@@ -3,8 +3,9 @@
 #include <TestRunner>
 #include <QtQuickTest/quicktest.h>
 #include <QtShell>
-#include "snapshottests.h"
+#include "testcases.h"
 #include "snapshottesting.h"
+#include "testablefunctions.h"
 
 #if defined(Q_OS_MAC) || defined(Q_OS_LINUX)
 #include <execinfo.h>
@@ -38,19 +39,19 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    if (qgetenv("TRAVIS") == "true") {
-        SnapshotTesting::setInteractiveEnabled(false);
-    }
-
-    if (qgetenv("APPVEYOR") == "True") {
+    if (Testable::isCI()) {
         SnapshotTesting::setInteractiveEnabled(false);
     }
 
     SnapshotTesting::setSnapshotsFile(QtShell::realpath_strip(SRCDIR, "snapshots.json"));
+    SnapshotTesting::setScreenshotImagePath(QtShell::realpath_strip(QtShell::pwd(), "screenshot"));
+
+    SnapshotTesting::addComponentIgnoreProperty("RadioButton", "QtQuick.Controls", "width");
+    SnapshotTesting::addComponentIgnoreProperty("RadioButton", "QtQuick.Controls", "height");
 
     TestRunner runner;
     runner.addImportPath("qrc:///");
-    runner.add<SnapshotTests>();
+    runner.add<Testcases>();
     runner.add(QString(SRCDIR) + "qmltests");
 
     bool error = runner.exec(app.arguments());

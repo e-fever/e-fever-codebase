@@ -2,6 +2,7 @@
 
   1) Simple structure. No dependence to other component
   2) No list structure like repeater / list view
+  3) Collection of basic type
  */
 import QtQuick 2.0
 import QtQuick.Controls 2.0 as QQC2
@@ -54,5 +55,14 @@ Item {
     MouseArea {
         id: item8
         acceptedButtons: Qt.RightButton
+    }
+
+    Canvas {
+        id: item9
+    }
+
+    Column {
+        id: item10
+        objectName: "Item10";
     }
 }

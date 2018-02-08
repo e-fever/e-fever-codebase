@@ -3,6 +3,9 @@ import QtQuick 2.0
 Item {
     id: sampleLoaderAsync
 
+    width: image.width
+    height: image.height
+
     Loader {
         id: loader
 

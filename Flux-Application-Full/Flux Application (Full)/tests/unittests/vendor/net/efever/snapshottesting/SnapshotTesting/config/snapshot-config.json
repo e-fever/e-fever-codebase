@@ -5,7 +5,6 @@
     "QQuickItem": {
         "name": "Item",
         "defaultValues": {
-            "activeFocus": false,
             "activeFocusOnTab": false,
             "antialiasing": false,
             "baselineOffset": 0,
@@ -99,7 +98,8 @@
             "contentHeight",
             "baseUrl",
             "contentWidth",
-            "implicitWidth"
+            "implicitWidth",
+            "fontInfo"
         ]
     },
     "QQuickColumn": {
@@ -129,7 +129,6 @@
     },
     "QQuickButton": {
         "defaultValues": {
-            "activeFocusOnTab": true
         },
         "ignoreProperties": [
             "baselineOffset"
@@ -139,6 +138,13 @@
         "ignoreProperties": [
             "mouseX",
             "mouseY"
+        ]
+    },
+    "RadioButton@QtQuick.Controls": {
+        "ignoreProperties": [
+            "implicitHeight",
+            "implicitWidth",
+            "baselineOffset"
         ]
     }
 }

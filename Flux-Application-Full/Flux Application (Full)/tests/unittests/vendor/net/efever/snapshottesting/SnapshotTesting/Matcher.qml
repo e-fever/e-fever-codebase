@@ -15,12 +15,17 @@ Dialog {
     property alias previousSnapshot: content.originalVersion
     property alias snapshot: content.currentVersion
     property alias screenshot: content.screenshot
+    property alias monospaceFont: content.monospaceFont
+    property alias previousScreenshot: content.previousScreenshot
+
+    property alias combinedScreenshot: content.combinedScreenshot
+
+    property alias tabIndex: content.tabIndex
 
     MatcherContentView {
         id: content
         implicitWidth: 640
         implicitHeight: 480
-        monospaceFont: component.monospaceFont
     }
 
     onRejected: {

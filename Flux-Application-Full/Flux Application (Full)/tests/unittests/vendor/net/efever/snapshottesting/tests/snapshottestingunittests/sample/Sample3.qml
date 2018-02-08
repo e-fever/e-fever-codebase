@@ -11,6 +11,7 @@ Item {
     Column {
         id: column
         Repeater {
+            objectName: "Repeater"
             model: 5
             delegate: Item {
                 id: repeaterItem
@@ -21,6 +22,7 @@ Item {
     }
 
     ListView {
+        objectName: "ListView"
         model: 5
         delegate: Item {
             id: listViewItem
@@ -33,6 +35,7 @@ Item {
         anchors.fill: parent
 
         Item {
+            objectName: "InnerItem"
             Layout.fillWidth: true
             Layout.fillHeight: true
         }

@@ -10,6 +10,7 @@
 #include <QQmlComponent>
 #include <QQuickItem>
 #include <QBuffer>
+#include <QTest>
 #include <asyncfuture.h>
 #include "snapshottesting.h"
 #include <private/qqmldata_p.h>
@@ -17,6 +18,8 @@
 #include <private/snapshottesting_p.h>
 #include <aconcurrent.h>
 #include <functional>
+#include <QQuickItemGrabResult>
+#include <QOpenGLFunctions>
 
 using namespace SnapshotTesting;
 using namespace SnapshotTesting::Private;
@@ -28,6 +31,13 @@ using namespace std;
 #include <cmath>
 #include <vector>
 #include <QFontDatabase>
+#include <QQuickRenderControl>
+#include <QQuickWindow>
+#include <QOffscreenSurface>
+#include <QOpenGLContext>
+#include <QOpenGLFramebufferObject>
+#include <QImageWriter>
+#include <QPainter>
 #include "dtl/Sequence.hpp"
 #include "dtl/Lcs.hpp"
 #include "dtl/variables.hpp"
@@ -43,12 +53,19 @@ using namespace std;
  *
  */
 
+/* Options */
+
 static QString m_snapshotFile;
+static QString m_screenshotImagePath;
 static QVariantMap m_snapshots;
 static bool m_snapshotsDirty = false;
 static bool m_interactiveEnabled = true;
 static bool m_ignoreAllMismatched = false;
 static bool m_acceptAllMismatched = false;
+static QStringList m_qtInternalContextUrls;
+
+/* End of Options */
+
 
 static QStringList knownComponentList;
 static QMap<QString,QString> classNameToComponentNameTable;
@@ -56,10 +73,16 @@ static QMap<QString,QString> classNameToComponentNameTable;
 /// The default values of components
 static QMap<QString, QVariantMap> classDefaultValues;
 
+/// A list of ignored properties according to the class of the component
 static QMap<QString, QStringList> classIgnoredProperties;
+
+/// A list of ignored properties according to the package and component name
+static QMap<QString, QStringList> componentIgnoredProperties;
 
 /// List of data type should not be processed in term of their meta type id
 static QList<int> forbiddenDataTypeList;
+
+std::function<QImage(const QImage&, const QImage&)> m_screenshotImageCombinator;
 
 #define DEHYDRATE_FONT(dest, property, original, current, field) \\
     if (original.field() != current.field()) { \\
@@ -101,9 +124,25 @@ static QString obtainKnownClassName(QObject* object) {
   return res;
 }
 
-static const QQmlType* findQmlType(const QMetaObject* meta, bool all = true) {
-    const QQmlType* ret = 0;
+static QList<QmlType> obtainQmlTypeList(bool all = true) {
+    QList<QmlType> ret;
 
+    auto createQmlType = [](const QQmlType* ty) {
+        QmlType item;
+        item.elementName = ty->elementName();
+        item.meta = ty->metaObject();
+        item.isCreatable = ty->isCreatable();
+        item.module = ty->module();
+        item.majorVersion = ty->majorVersion();
+        item.minorVersion = ty->minorVersion();
+        item.isNull = false;
+        if (ty->metaObject()) {
+            item.className = ty->metaObject()->className();
+        }
+        return item;
+    };
+
+#if (QT_VERSION < QT_VERSION_CHECK(5,9,2))
     QList<QQmlType*> types;
 
     if (all) {
@@ -113,26 +152,41 @@ static const QQmlType* findQmlType(const QMetaObject* meta, bool all = true) {
     }
 
     foreach (const QQmlType *ty, types) {
-        if (ty->metaObject() == meta) {
+       ret << createQmlType(ty);
+    }
+#else
+    QList<QQmlType> types;
+
+    if (all) {
+        types = QQmlMetaType::qmlAllTypes();
+    } else {
+        types = QQmlMetaType::qmlTypes();
+    }
+
+    foreach (const QQmlType ty, types) {
+        ret << createQmlType(&ty);
+    }
+
+#endif
+
+    return ret;
+};
+
+static const QmlType findQmlType(const QMetaObject* meta, bool all = true) {
+    QmlType ret;
+    ret.isNull = true;
+
+    QList<QmlType> types = obtainQmlTypeList(all);
+
+    foreach (const QmlType ty, types) {
+        if (ty.meta == meta) {
             ret = ty;
+            ret.isNull = false;
             break;
         }
     }
 
     return ret;
-}
-
-static bool isPublicComponent(const QMetaObject* meta) {
-    bool res = false;
-
-
-    foreach (const QQmlType *ty, QQmlMetaType::qmlTypes()) {
-        if (ty->metaObject() == meta) {
-            res = true;
-            break;
-        }
-    }
-    return res;
 }
 
 /// Copy from QImmutable project
@@ -147,24 +201,71 @@ static void assign(QVariantMap &dest, const QObject *source)
         QVariant value = source->property(property.name());
         dest[p] = value;
     }
+}
 
+static bool inQtInternalContextUrls(const QUrl& url) {
+    return m_qtInternalContextUrls.indexOf(QtShell::dirname(url.toString())) >= 0;
+};
+
+/*
+static void printContextList(QList<QQmlContext*> list) {
+    for (int i = 0 ; i < list.size();i++) {
+        qDebug() << list[i]->baseUrl();
+    }
+}
+*/
+
+static QList<QQmlContext*> filterContextWithNullBaseUrl(QList<QQmlContext*> list) {
+    QList<QQmlContext*> res;
+    for (int i = 0 ; i < list.size();i++) {
+        if (list[i]->baseUrl().isEmpty())
+            continue;
+        res << list[i];
+    }
+    return res;
+}
+
+QByteArray SnapshotTesting::Private::toBase64(const QImage& image) {
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    QImageWriter writer(&buffer, "PNG");
+    writer.write(image);
+
+    return buffer.data().toBase64();
+}
+
+static void saveScreenshotImage(const QString& name, const QImage& image) {
+    if (image.isNull()) {
+        return;
+    }
+
+    QtShell::mkdir("-p", m_screenshotImagePath);
+
+    QString file = QtShell::realpath_strip(m_screenshotImagePath, name + ".png");
+
+    image.save(file);
 }
 
 QString SnapshotTesting::Private::classNameToComponentName(const QString &className)
 {
     QString res = className;
 
-    const QQmlType* type = 0;
+    QList<QmlType> types;
 
-    foreach (const QQmlType *ty, QQmlMetaType::qmlTypes()) {
-        if (ty->metaObject() && ty->metaObject()->className() == className) {
+    QmlType type;
+
+    types = obtainQmlTypeList(false);
+
+    foreach (QmlType ty, types) {
+        if (ty.className == className) {
             type = ty;
             break;
         }
     }
 
-    if (type) {
-        return type->elementName();
+    if (!type.isNull) {
+        return type.elementName;
     }
 
     if (res.indexOf("QQuick") == 0) {
@@ -213,6 +314,7 @@ QQmlContext* SnapshotTesting::Private::obtainCurrentScopeContext(QObject *object
     return result;
 }
 
+/// Obtain the bottom-most context of a QObject
 QQmlContext *SnapshotTesting::Private::obtainCreationContext(QObject *object)
 {
     QQmlContext* result = 0;
@@ -232,7 +334,7 @@ QString SnapshotTesting::Private::obtainComponentNameByBaseUrl(const QUrl &baseU
     return info.baseName();
 }
 
-QString SnapshotTesting::Private::obtainComponentNameByBaseContext(QObject *object)
+QString SnapshotTesting::Private::obtainComponentNameByCreationContext(QObject *object)
 {
     QQmlContext* creationContext = SnapshotTesting::Private::obtainCreationContext(object);
 
@@ -276,6 +378,42 @@ QString SnapshotTesting::Private::obtainComponentNameByCurrentScopeContext(QObje
     } else {
         return obtainComponentNameByQuickClass(object);
     }
+}
+
+QString SnapshotTesting::Private::obtainComponentNameOfQtType(QObject *object)
+{
+    QList<QQmlContext*> list = listOwnedContext(object);
+    QString res;
+
+
+    while (list.size() > 0) {
+        QQmlContext* context = list.takeFirst();
+        QUrl url = context->baseUrl();
+        if (inQtInternalContextUrls(url)) {
+            res = obtainComponentNameByBaseUrl(url);
+        }
+    }
+
+    if (res.isNull()) {
+
+        const QMetaObject* meta = object->metaObject();
+
+        while (meta) {
+
+            QString className = meta->className();
+
+            // A dirty hack.
+            if (className.indexOf("QQuick") == 0 ||
+                className == "QObject") {
+                res = classNameToComponentName(className);
+                break;
+            }
+
+            meta = meta->superClass();
+        }
+    }
+
+    return res;
 }
 
 QString SnapshotTesting::Private::obtainComponentNameByClass(QObject *object)
@@ -322,13 +460,28 @@ QString SnapshotTesting::Private::obtainComponentNameByQuickClass(QObject *objec
 }
 
 
-QString SnapshotTesting::Private::obtainRootComponentName(QObject *object, bool expandAll)
+QString SnapshotTesting::Private::obtainSourceComponentName(QObject *object, bool expandAll)
 {
     QString res;
     if (expandAll) {
         res = obtainComponentNameByQuickClass(object);
     } else {
-        res = SnapshotTesting::Private::obtainComponentNameByInheritedContext(object);
+        QList<QQmlContext*> list = listOwnedContext(object);
+        list = filterContextWithNullBaseUrl(list);
+        QQmlContext* context = 0;
+
+        if (list.size() >= 2) {
+            context = list[1];
+        }
+
+        if (context) {
+            res = obtainComponentNameByBaseUrl(context->baseUrl());
+        }
+
+        if (res.isNull()) {
+            res = obtainComponentNameOfQtType(object);
+        }
+
     }
 
     return res;
@@ -350,7 +503,7 @@ static bool inherited(QObject *object, QString className) {
     return res;
 }
 
-static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& options) {
+static QVariantMap dehydrate(QObject* source, const SnapshotTesting::CaptureOptions& options) {
     QString topLevelContextName;
     bool captureVisibleItemOnly = options.captureVisibleItemOnly;
     bool expandAll = options.expandAll;
@@ -406,13 +559,22 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
         return res;
     };
 
+    auto obtainBaseUrl = [](QObject* object) {
+        QUrl baseUrl;
+        QQmlContext *context = qmlContext(object);
+        if (context) {
+            baseUrl = context->baseUrl();
+        }
+        return baseUrl;
+    };
+
     /// Obtain the item name in QML
     auto obtainItemHeader = [=,&topLevelContextName](QObject* object) {
         Header header;
-        QString result;
+        QString name;
 
         if (object == source) {
-            header.name = SnapshotTesting::Private::obtainRootComponentName(object, options.expandAll);
+            header.name = SnapshotTesting::Private::obtainSourceComponentName(object, options.expandAll);
             QString contextName = obtainComponentNameByCurrentScopeContext(object);
             if (header.name != contextName) {
                 header.comment = contextName;
@@ -420,22 +582,23 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
             return header;
         }
 
-        result = SnapshotTesting::Private::obtainComponentNameByQuickClass(object);
-
-        if (!expandAll && object != source) {
-            QString contextName = obtainContextName(object);
-            if (contextName != topLevelContextName && contextName != "") {
-                result = contextName;
-            }
+        QQmlContext* context = obtainBaseContext(object);
+        if (context) {
+            name = obtainComponentNameByBaseUrl(context->baseUrl());
+        }
+        if (name.isNull()) {
+            name = obtainComponentNameByQuickClass(object);
         }
 
-        header.name = result;
+
+        header.name = name;
+
         if (options.expandAll) {
-            QString comment = obtainComponentNameByClass(object);
-            if (header.name != comment &&
-               !comment.isNull() &&
-               comment != obtainComponentNameByQuickClass(object)) {
-               header.comment = comment;
+            QString rawTypename = obtainComponentNameByQuickClass(object);
+
+            if (header.name != rawTypename) {
+                header.comment = header.name;
+                header.name = rawTypename;
             }
         }
 
@@ -477,19 +640,7 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
     };
 
     auto obtainIgnoreList = [=](QObject* object) {
-        const QMetaObject* meta = object->metaObject();
-        QStringList result;
-        while (meta != 0) {
-            QString className = meta->className();
-            if (classIgnoredProperties.contains(className)) {
-                QStringList list = classIgnoredProperties[className];
-                result.append(list);
-            }
-
-            meta = meta->superClass();
-        }
-
-        return result;
+        return findIgnorePropertyList(object, classIgnoredProperties, componentIgnoredProperties);
     };
 
     auto _dehydrateFont = [=](QVariantMap& dest, QString property, QFont original , QFont current) {
@@ -507,6 +658,14 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
         DEHYDRATE_FONT(dest,property,original,current, underline);
         DEHYDRATE_FONT(dest,property,original,current, weight);
         DEHYDRATE_FONT(dest,property,original,current, wordSpacing);
+    };
+
+    auto isQMetaObject = [](QJSValue value) {
+#if (QT_VERSION < QT_VERSION_CHECK(5,8,0))
+        return false;
+#else
+        return value.isQMetaObject();
+#endif
     };
 
     auto _dehydrate = [=](QObject* object, QString componentName) {
@@ -549,7 +708,7 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
                 continue;
             } else if (value.userType() == qMetaTypeId<QJSValue>()) {
                 QJSValue jsValue = value.value<QJSValue>();
-                if (jsValue.isQObject() || jsValue.isQMetaObject()) {
+                if (jsValue.isQObject() || isQMetaObject(jsValue)) {
                     continue;
                 }
                 value = jsValue.toVariant();
@@ -622,13 +781,14 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
             dest["$comment"] = header.comment;
         }
 
-        QUrl baseUrl;
-        QQmlContext *context = qmlContext(object);
-        if (context) {
-            baseUrl = context->baseUrl();
-        }
+        QUrl baseUrl = obtainBaseUrl(object);
 
-        if (!expandAll && topLevelBaseUrlList.indexOf(baseUrl) < 0) {
+        if ( (!expandAll && topLevelBaseUrlList.indexOf(baseUrl) < 0) ||
+             (inQtInternalContextUrls(baseUrl))) {
+            // Skip condition
+            // 1) It don't have any context relatd to the top level context url
+            // 2) The context belong to Qt's internal context
+
             dest["$skip"] = true;
         }
 
@@ -642,7 +802,7 @@ static QVariantMap dehydrate(QObject* source, const SnapshotTesting::Options& op
     return travel(source);
 }
 
-static QString prettyText(QVariantMap snapshot, SnapshotTesting::Options& options) {
+static QString prettyText(QVariantMap snapshot, SnapshotTesting::CaptureOptions& options) {
     QStringList priorityFields;
 
     priorityFields << "objectName" << "x" << "y" << "width" << "height";
@@ -854,7 +1014,7 @@ void SnapshotTesting::saveSnapshots()
     file.close();
 }
 
-void SnapshotTesting::setSnapshot(const QString &name, const QString &content)
+void SnapshotTesting::setSnapshotText(const QString &name, const QString &content)
 {
     m_snapshots[name] = content;
     m_snapshotsDirty = true;
@@ -880,23 +1040,39 @@ bool SnapshotTesting::ignoreAllMismatched()
     return m_ignoreAllMismatched;
 }
 
-QString SnapshotTesting::capture(QObject *object, SnapshotTesting::Options options)
+QString SnapshotTesting::capture(QObject *object, SnapshotTesting::CaptureOptions options)
 {
-    if (options.captureWhenLoaded) {
-        Private::waitForLoaded(object);
+    if (options.captureOnReady) {
+        Private::waitUntilReady(object);
     }
 
     QVariantMap data = dehydrate(object, options);
     return prettyText(data, options);
 }
 
-bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &snapshot)
+bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &snapshot) {
+    return matchStoredSnapshot(name, snapshot, QImage());
+}
+
+bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &snapshot, const QImage& screenshot)
 {
     QVariantMap snapshots = SnapshotTesting::loadStoredSnapshots();
+    Q_UNUSED(screenshot);
 
     QString originalVersion = snapshots[name].toString();
 
+    static int tabIndex = 0;
+
     if (originalVersion == snapshot) {
+        // Save the screenshot if absent
+        if (!m_screenshotImagePath.isNull() && !screenshot.isNull()) {
+
+            QString file = QtShell::realpath_strip(m_screenshotImagePath, name + ".png");
+
+            if (!QFile::exists(file)) {
+                saveScreenshotImage(name, screenshot);
+            }
+        }
         return true;
     }
 
@@ -906,7 +1082,7 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
     qDebug().noquote() << diff;
 
     if (m_acceptAllMismatched) {
-        SnapshotTesting::setSnapshot(name, snapshot);
+        SnapshotTesting::setSnapshotText(name, snapshot);
         SnapshotTesting::saveSnapshots();
         return true;
     }
@@ -914,6 +1090,7 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
     if (SnapshotTesting::interactiveEnabled() && !SnapshotTesting::ignoreAllMismatched()) {
         QQmlApplicationEngine engine;
         engine.addImportPath("qrc:///");
+
         engine.load(QUrl("qrc:///qt-project.org/imports/SnapshotTesting/Matcher.qml"));
 
         QObject* dialog = engine.rootObjects()[0];
@@ -925,9 +1102,33 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
         dialog->setProperty("previousSnapshot", originalVersion);
         dialog->setProperty("snapshot", snapshot);
         dialog->setProperty("title", name);
+        dialog->setProperty("tabIndex", tabIndex);
+
+        if (!screenshot.isNull()) {
+            dialog->setProperty("screenshot", QString(toBase64(screenshot)));
+        }
+
+        QImage previousScreenshot;
+
+        if (!m_screenshotImagePath.isNull()) {
+            QString previosScreenshotFile;
+             previosScreenshotFile = QtShell::realpath_strip(m_screenshotImagePath, name + ".png");
+            if (QFile::exists(previosScreenshotFile)) {
+                if (previousScreenshot.load(previosScreenshotFile)) {
+                    dialog->setProperty("previousScreenshot", toBase64(previousScreenshot));
+                }
+            }
+        }
+
+        if (!previousScreenshot.isNull() && !screenshot.isNull() && m_screenshotImageCombinator != nullptr) {
+            QImage combinedScreenshot = m_screenshotImageCombinator(screenshot, previousScreenshot);
+            dialog->setProperty("combinedScreenshot", toBase64(combinedScreenshot));
+        }
 
         QMetaObject::invokeMethod(dialog, "open");
         QCoreApplication::exec();
+
+        tabIndex = dialog->property("tabIndex").toInt();
 
         int button = dialog->property("clickedButton").value<int>();
         switch (button) {
@@ -939,8 +1140,9 @@ bool SnapshotTesting::matchStoredSnapshot(const QString &name, const QString &sn
             m_acceptAllMismatched = true;
         case 0x00004000: // Yes
         case 0x02000000:
-            SnapshotTesting::setSnapshot(name, snapshot);
+            SnapshotTesting::setSnapshotText(name, snapshot);
             SnapshotTesting::saveSnapshots();
+            saveScreenshotImage(name, screenshot);
             return true;
             break;
         }
@@ -954,6 +1156,9 @@ static void init() {
     if (m_snapshotFile.isNull()) {
         m_snapshotFile = QtShell::realpath_strip(QtShell::pwd(), "snapshots.json");
     }
+
+    {
+        /* Configuration Loading */
 
     QString text = QtShell::cat(":/qt-project.org/imports/SnapshotTesting/config/snapshot-config.json");
 
@@ -969,15 +1174,54 @@ static void init() {
     for (int i = 0 ; i < knownComponentList.size() ; i++) {
         QString key = knownComponentList[i];
         QVariantMap record =  map[key].toMap();
-        classNameToComponentNameTable[key] = record["name"].toString();
-        classDefaultValues[key] = record["defaultValues"].toMap();
-        classIgnoredProperties[key] = record["ignoreProperties"].toStringList();
+
+        if (!key.contains("@")) {
+            classNameToComponentNameTable[key] = record["name"].toString();
+            classDefaultValues[key] = record["defaultValues"].toMap();
+            classIgnoredProperties[key] = record["ignoreProperties"].toStringList();
+        } else {
+            componentIgnoredProperties[key] = record["ignoreProperties"].toStringList();
+        }
     }
 
     forbiddenDataTypeList << qMetaTypeId<QQmlListProperty<QQuickItem>>()
                       << qMetaTypeId<QQmlListProperty<QObject>>()
                       << qMetaTypeId<QByteArray>()
                       << qMetaTypeId<void*>();
+    }
+
+    /* Dynamic Configuration */
+    {
+        QQmlEngine engine;
+
+        {
+            QObject* button = createQmlComponent(&engine, "Button", "QtQuick.Controls", 2 ,0);
+            QStringList urls = listContextUrls(button);
+            m_qtInternalContextUrls << QtShell::dirname(urls[0]);
+            button->deleteLater();
+        }
+
+        {
+            QObject* button = createQmlComponent(&engine, "RadioButton", "QtQuick.Controls", 1 ,0);
+            QStringList urls = listContextUrls(button);
+
+            foreach (QString url, urls) {
+                m_qtInternalContextUrls << QtShell::dirname(url);
+            }
+            button->deleteLater();
+        }
+
+        {
+            QObject* object = createQmlComponent(&engine, "RadioButtonStyle", "QtQuick.Controls.Styles", 1,0);
+            QStringList urls = listContextUrls(object);
+
+            foreach (QString url, urls) {
+                m_qtInternalContextUrls << QtShell::dirname(url);
+            }
+            object->deleteLater();
+        }
+    }
+
 }
 
 
@@ -1106,8 +1350,13 @@ QObjectList SnapshotTesting::Private::obtainChildrenObjectList(QObject *object)
     return children;
 }
 
-bool SnapshotTesting::Private::waitForLoaded(QObject *object, int timeout)
+
+QFuture<void> SnapshotTesting::Private::whenReady(QObject *object)
 {
+    if (object == 0) {
+        return QFuture<void>();
+    }
+
     auto onStatusChanged = [=](QObject* object) mutable {
         return AsyncFuture::observe(object,SIGNAL(statusChanged())).future();
     };
@@ -1150,7 +1399,9 @@ bool SnapshotTesting::Private::waitForLoaded(QObject *object, int timeout)
     });
 
     if (futures.size() == 0) {
-        return true;
+        auto defer = AsyncFuture::deferred<void>();
+        defer.complete();
+        return defer.future();
     }
 
     auto combinator = AsyncFuture::combine();
@@ -1158,15 +1409,22 @@ bool SnapshotTesting::Private::waitForLoaded(QObject *object, int timeout)
         combinator << futures[i];
     }
 
+    return combinator.future();
+}
+
+bool SnapshotTesting::Private::waitUntilReady(QObject *object, int timeout)
+{
     auto defer = AsyncFuture::deferred<void>();
-    defer.complete(combinator.future());
+
+    QFuture<void> ready = whenReady(object);
+
+    defer.complete(ready);
 
     QTimer::singleShot(timeout, [=]() mutable {
         defer.cancel();
     });
 
     auto future = defer.future();
-
     AConcurrent::await(future);
 
     if (future.isCanceled()) {
@@ -1208,7 +1466,6 @@ void SnapshotTesting::Private::walk(QObject *object, std::function<bool (QObject
     _walk(object, 0);
 }
 
-
 void SnapshotTesting::addClassIgnoredProperty(const QString &className, const QString &property)
 {
     QStringList list = classIgnoredProperties[className];
@@ -1228,16 +1485,9 @@ void SnapshotTesting::removeClassIgnoredProperty(const QString &className, const
 QString SnapshotTesting::Private::obtainQmlPackage(QObject *object)
 {
     const QMetaObject* meta = object->metaObject();
-    QString package;
 
-    foreach (const QQmlType *ty, QQmlMetaType::qmlAllTypes()) {
-        if (ty->metaObject() == meta) {
-            package = ty->module();
-            break;
-        }
-    }
-
-    return package;
+    QmlType type = findQmlType(meta);
+    return type.module;
 }
 
 QVariantMap SnapshotTesting::Private::obtainDynamicDefaultValues(QObject *object)
@@ -1254,46 +1504,321 @@ QVariantMap SnapshotTesting::Private::obtainDynamicDefaultValues(const QMetaObje
     }
 
     QVariantMap res;
-    const QQmlType* type = findQmlType(meta);
+    const QmlType type = findQmlType(meta, false); // it will only return public component
 
-    if (!type || !type->isCreatable() || !isPublicComponent(meta)) {
+    if (type.isNull || !type.isCreatable) {
         return res;
     }
 
-    auto createQmlComponent = [](QString componentName, QString package, int major, int minor) {
-        QStringList packages;
-        packages << QString("import %1 %2.%3").arg(package).arg(major).arg(minor);
+    auto getDefaultValues = [](QString componentName, QString package, int major, int minor) {
 
-        QString qml  = QString("%2\\n %1 {}").arg(componentName).arg(packages.join("\\n"));
+        QQmlEngine engine;
 
-        QQmlApplicationEngine engine;
-        QQmlComponent comp (&engine);
-        comp.setData(qml.toUtf8(),QUrl());
-        QObject* holder = comp.create();
+        QObject* holder = createQmlComponent(&engine, componentName, package, major, minor);
         QVariantMap res;
 
         if (holder) {
             assign(res, holder);
             delete holder;
-        } else {
-            qDebug() << comp.errorString();
         }
 
         return res;
     };
 
-    QString module = type->module();
+    QString module = type.module;
 
     // dirty hack
     if (module == "QtQuick.Templates") {
         module = "QtQuick.Controls";
     }
 
-    res = createQmlComponent(type->elementName(), module, type->majorVersion(), type->minorVersion());
+    res = getDefaultValues(type.elementName, module, type.majorVersion, type.minorVersion);
 
     storage[meta] = res;
 
     return res;
+}
+
+
+QObject *SnapshotTesting::Private::createQmlComponent(QQmlEngine* engine, QString componentName, QString package, int major, int minor)
+{
+    QStringList packages;
+    packages << QString("import %1 %2.%3").arg(package).arg(major).arg(minor);
+
+    QString qml  = QString("%2\\n %1 {}").arg(componentName).arg(packages.join("\\n"));
+
+    QQmlComponent comp (engine);
+    comp.setData(qml.toUtf8(),QUrl());
+    QObject* ret = comp.create();
+
+    if (!ret) {
+        qDebug() << comp.errorString();
+    }
+
+    return ret;
+}
+
+QStringList SnapshotTesting::Private::listContextUrls(QObject *object)
+{
+    QStringList list;
+    QQmlContext* context = obtainCreationContext(object);
+
+    while (context) {
+        QUrl url  = context->baseUrl();
+        if (!url.isEmpty()) {
+            list << url.toString();
+        }
+        context = context->parentContext();
+    }
+
+    return list;
+}
+
+QFuture<QImage> SnapshotTesting::Private::grabImage(QQuickItem *item)
+{
+    QSize size = QSize(item->width(), item->height());
+    QSharedPointer<QQuickItemGrabResult> grabber = item->grabToImage(size);
+
+    if (grabber.isNull()) {
+        return QFuture<QImage>();
+    }
+
+    auto defer = AsyncFuture::deferred<QImage>();
+
+    AsyncFuture::observe(grabber.data(), &QQuickItemGrabResult::ready).subscribe([=]() mutable {
+        defer.complete(grabber->image());
+    });
+
+    return defer.future();
+}
+
+bool SnapshotTesting::tryMatchStoredSnapshot(const QString &name, const QString &snapshot)
+{
+    QVariantMap snapshots = SnapshotTesting::loadStoredSnapshots();
+
+    QString originalVersion = snapshots[name].toString();
+
+    return (originalVersion == snapshot);
+}
+
+void SnapshotTesting::setScreenshotImagePath(const QString &path)
+{
+    m_screenshotImagePath = path;
+}
+
+QImage SnapshotTesting::Private::combineImages(const QImage &prev, const QImage &curr)
+{
+    QSize size(qMax(prev.width(), curr.width()), qMax(prev.height(), curr.height()));
+
+    QList<QImage> images;
+    images << prev << curr;
+
+    QImage canvas(size, QImage::Format_RGB32);
+    canvas.fill(QColor(0,0,0,0));
+
+    QPainter painter(&canvas);
+    painter.setOpacity(0.5);
+    foreach (QImage image, images) {
+        QSize s = image.size();
+        int x = (size.width() - s.width()) / 2;
+        int y = (size.height() - s.height()) / 2;
+        painter.drawImage(x,y, image);
+    }
+    painter.end();
+
+    return canvas;
+}
+
+QList<QQmlContext*> SnapshotTesting::Private::listOwnedContext(QObject* object) {
+    QList<QQmlContext*> result;
+
+
+
+    QQmlContext* context = obtainCreationContext(object);
+
+    auto inContext = [=](QQmlContext* context, QObject* object) {
+        QQmlContext* c = obtainCreationContext(object);
+
+        while (c) {
+
+            if (c == context || (c->baseUrl() == context->baseUrl() && !c->baseUrl().isEmpty())) {
+                return true;
+            }
+            c = c->parentContext();
+        }
+        return false;
+    };
+
+    std::function<bool(QQmlContext* context, QObject* object)> _containsContext;
+
+    _containsContext = [&_containsContext, inContext](QQmlContext* context, QObject* object) {
+        if (inContext(context, object)) {
+            return true;
+        }
+
+        if (object->parent()) {
+            if (_containsContext(context, object->parent())) {
+                return true;
+            }
+        }
+
+        QQuickItem* item = qobject_cast<QQuickItem*>(object);
+        if (item && item->parentItem()) {
+            if (_containsContext(context, item->parentItem())) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    auto isBaseContext = [=](QQmlContext* context, QObject* object) {
+
+        if (object->parent()) {
+            if (_containsContext(context, object->parent())) {
+                return false;
+            }
+        }
+
+        QQuickItem* item = qobject_cast<QQuickItem*>(object);
+        if (item && item->parentItem()) {
+            if (_containsContext(context, item->parentItem())) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    QList<QQmlContext*> list;
+    QQmlContext* c = context;
+    while (c) {
+        list << c;
+        c = c->parentContext();
+    }
+
+    while (list.size() > 0) {
+        c = list.takeLast();
+        if (isBaseContext(c, object)) {
+            result << c;
+        }
+    }
+
+    return result;
+}
+
+
+QQmlContext *SnapshotTesting::Private::obtainBaseContext(QObject *object)
+{
+    QQmlContext* res = 0;
+
+    QList<QQmlContext*> list = listOwnedContext(object);
+
+    if (list.size() > 0) {
+        res = list.first();
+    }
+
+    return res;
+}
+
+QString SnapshotTesting::Private::converToPackageNotation(QUrl url)
+{
+    QString input = url.path();
+    QStringList token = input.split("/");
+
+    QStringList parts;
+    for (int i = 0 ; i < token.size(); i++) {
+        QString str = token[i];
+        if (str.isEmpty()) {
+            continue;
+        }
+
+        str.replace(QRegExp("\\\\.[0-9]+$"), "");
+
+        parts << str;
+    }
+
+    parts.takeLast();
+    return parts.join(".");
+}
+
+QStringList SnapshotTesting::Private::findIgnorePropertyList(QObject *object, QMap<QString, QStringList> ignoreListForClasses, QMap<QString, QStringList> ignoreListForComponent)
+{
+    const QMetaObject* meta = object->metaObject();
+    QStringList result;
+    while (meta != 0) {
+        QString className = meta->className();
+        if (ignoreListForClasses.contains(className)) {
+            QStringList list = ignoreListForClasses[className];
+            result.append(list);
+        }
+
+        meta = meta->superClass();
+    }
+
+
+    QStringList baseUrls = listContextUrls(object);
+
+    while (baseUrls.size() > 0) {
+        QString baseUrl = baseUrls.takeLast();
+        QString package = converToPackageNotation(QUrl(baseUrl));
+        QString name = obtainComponentNameByBaseUrl(QUrl(baseUrl)) + "@";
+
+        QMapIterator<QString, QStringList> iter(ignoreListForComponent);
+
+        while (iter.hasNext()) {
+            iter.next();
+            if (!iter.key().startsWith(name)) {
+                continue;
+            }
+
+            QStringList token = iter.key().split("@");
+            if (package.endsWith(token.last())) {
+                result.append(iter.value());
+            }
+        }
+    }
+
+    return result;
+}
+
+void SnapshotTesting::addComponentIgnoreProperty(const QString &componentName, const QString &package, const QString &property)
+{
+    QString key = componentName + "@" + package;
+
+    QStringList list = componentIgnoredProperties[key];
+    if (list.indexOf(property) < 0) {
+        list.append(property);
+    }
+    componentIgnoredProperties[key] = list;
+}
+
+
+void SnapshotTesting::removeComponentIgnoreProperty(const QString &componentName, const QString &package, const QString &property)
+{
+    QString key = componentName + "@" + package;
+
+    QStringList list = componentIgnoredProperties[key];
+    list.removeAll(property);
+    componentIgnoredProperties[key] = list;
+}
+
+
+SnapshotTesting::Test SnapshotTesting::createTest()
+{
+    SnapshotTesting::Test test;
+    test.setName(QTest::currentTestFunction());
+    return test;
+}
+
+QString SnapshotTesting::replaceLines(const QString &input, QRegExp regexp, QString replace)
+{
+    QStringList token = input.split("\\n");
+
+    for (int i = 0; i < token.size() ;i++) {
+        token[i] = token[i].replace(regexp, replace);
+    }
+    return token.join("\\n");
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)

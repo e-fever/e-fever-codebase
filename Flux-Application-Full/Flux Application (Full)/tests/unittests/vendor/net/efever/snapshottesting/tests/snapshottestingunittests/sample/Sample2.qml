@@ -9,7 +9,9 @@ Item {
     Sample1 {
         id: item_sample1
         objectName: "item_sample1"
+
         Item {
+            objectName: "InnerItem"
             width: 10
             height: 10
         }

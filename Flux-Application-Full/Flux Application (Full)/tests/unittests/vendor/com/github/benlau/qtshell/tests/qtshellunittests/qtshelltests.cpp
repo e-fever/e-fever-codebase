@@ -159,6 +159,12 @@ void QtShellTests::test_find()
 
     QVERIFY(files.filter(QRegExp("*.h",Qt::CaseInsensitive,QRegExp::Wildcard)).size() == files.size());
 
+    // find by file Url
+    files = find(QUrl::fromLocalFile(QtShell::pwd() + "/tmp").toString());
+    qDebug() << files;
+    QCOMPARE(files.size() , 2);
+    QVERIFY(files[0].indexOf("file") == 0);
+
 }
 
 void QtShellTests::test_find_verify_filters()
@@ -170,6 +176,37 @@ void QtShellTests::test_find_verify_filters()
 
     QCOMPARE(find("findTestCases", "*.txt").size(), 2);
     QCOMPARE(find("findTestCases", "a*.txt").size(), 1);
+}
+
+void QtShellTests::test_find_options()
+{
+    QString folder = realpath_strip(pwd(), QTest::currentTestFunction());
+    mkdir("-p", folder +"/A");
+    mkdir("-p", folder +"/A/A1");
+    touch(folder + "/file1.txt");
+    touch(folder + "/A/file2.txt");
+    touch(folder + "/A/A1/file3.txt");
+
+    {
+        // Depth
+        FindOptions options;
+
+        QCOMPARE(find(folder).size(), 6);
+
+        options.maxdepth = 0;
+        QCOMPARE(find(options,folder).size(), 1);
+
+        options.maxdepth = 1;
+        QCOMPARE(find(options,folder).size(), 3);
+
+        options.maxdepth = 2;
+        QCOMPARE(find(options,folder).size(), 5);
+
+        options.maxdepth = 3;
+        QCOMPARE(find(options,folder).size(), 6);
+
+    }
+
 }
 
 void QtShellTests::test_rmdir()
@@ -248,6 +285,19 @@ void QtShellTests::test_rm()
     QVERIFY(!dir.exists());
 
     QVERIFY(rm("-f", "a-file-not-existed"));
+
+    {
+        // Remove directory with absolute path
+        QString path = QtShell::pwd() + "/tmp";
+        QDir dir(path);
+
+        qDebug() << path;
+        mkdir("-p", path);
+        QVERIFY(dir.exists());
+        QVERIFY(rm("-vr",path));
+        QVERIFY(!dir.exists());
+    }
+
 }
 
 void QtShellTests::test_mkdir()
@@ -389,6 +439,15 @@ void QtShellTests::test_cat()
 
     content = cat(QStringList() << "cat.txt" << "cat.txt");
     QVERIFY(content == "0123456789\\n0123456789");
+
+    QUrl url = QUrl::fromLocalFile(QtShell::pwd() + "/cat.txt");
+    qDebug() << "cat" << url.toString();
+    content = cat(url.toString());
+    QVERIFY(content == "0123456789");
+
+    content = cat(QUrl::fromLocalFile(QtShell::pwd() + "/cat.txt").toString());
+    QVERIFY(content == "0123456789");
+
 
 }
 

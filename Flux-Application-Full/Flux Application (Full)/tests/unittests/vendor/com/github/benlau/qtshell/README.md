@@ -28,6 +28,15 @@ QtShell::touch(lockFile);
 QString content = QtShell::cat(input);
 ```
 
+4) Join multiple string into an absolute path
+
+```
+    realpath_strip("/tmp", "subdir1", "/subdir2/"); // "/tmp/subdir1/subdir2"
+    realpath_strip("tmp", "subdir1", "..//subdir2/"); // "$PWD/tmp/subdir2"
+    realpath_strip("file:///tmp1"); // "/tmp1"
+    realpath_strip("qrc:///tmp1"); // ":/tmp1"
+```
+
 
 Installation
 ------------
@@ -60,7 +69,7 @@ dirname
 
 Return directory portion of pathname.
 
-This function does not invoke any blocked API.
+Remarks: It is a non-blocking function
 
 basename
 --------
@@ -69,7 +78,7 @@ basename
 
 Return filename portion of pathname
 
-This function does not invoke any blocked API.
+Remarks: It is a non-blocking function
 
 find
 ----

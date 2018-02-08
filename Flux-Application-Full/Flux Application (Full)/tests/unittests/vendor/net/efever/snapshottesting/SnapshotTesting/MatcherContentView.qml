@@ -10,13 +10,19 @@ Item {
     property string originalVersion: ""
     property string currentVersion: ""
 
-    property url screenshot: ""
+    property string screenshot: ""
+    property string previousScreenshot: ""
 
+    property string combinedScreenshot: ""
     property string monospaceFont: ""
 
+    property alias tabIndex: tabView.currentIndex
+
     TabView {
+        id: tabView
         anchors.fill: parent
         anchors.bottomMargin: 40
+        clip: true
 
         Tab {
             title: "Diff"
@@ -50,6 +56,28 @@ Item {
                 }
             }
         }
+    }
+
+    Component {
+        id: screenshotViewer
+        Item {
+
+            ScreenshotBrowser {
+                anchors.fill: parent
+                anchors.margins: 4
+                screenshot: contentView.screenshot
+                previousScreenshot: contentView.previousScreenshot
+                combinedScreenshot: contentView.combinedScreenshot
+            }
+        }
+    }
+
+    onScreenshotChanged: {
+        if (screenshot  === "") {
+            return;
+        }
+
+        tabView.addTab("Screenshot", screenshotViewer);
     }
 
     Text {

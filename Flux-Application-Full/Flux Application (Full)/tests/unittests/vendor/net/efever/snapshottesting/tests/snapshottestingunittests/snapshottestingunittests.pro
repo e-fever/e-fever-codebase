@@ -6,8 +6,8 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-SOURCES +=     main.cpp \\    
-    snapshottests.cpp
+SOURCES +=     main.cpp \\     
+    testcases.cpp
 
 DEFINES += SRCDIR=\\\\\\"$$PWD/\\\\\\"
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\\\\"$$PWD/\\\\\\"
@@ -27,6 +27,7 @@ DISTFILES +=     qpm.json     \\
     qmltests/tst_SnapshotTesting.qml \\
     snapshots.json \\
     ../../README.md \\
+    ../../.travis.yml \\
     sample/Sample5Form.ui.qml \\
     sample/Sample5.qml \\
     sample/Sample6.qml \\
@@ -34,7 +35,10 @@ DISTFILES +=     qpm.json     \\
     sample/Sample8.qml \\
     sample/Sample9.qml \\
     sample/Sample_QJSValue.qml \\
-    sample/Sample_Loader_Async.qml
+    sample/Sample_Loader_Async.qml \\
+    sample/CustomButton.qml \\
+    sample/Sample_Layout.qml \\
+    sample/Sample_Control1.qml
 
-HEADERS += \\    
-    snapshottests.h
+HEADERS += \\     
+    testcases.h

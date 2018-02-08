@@ -13,7 +13,7 @@ Adapter::Adapter(QObject *parent) : QObject(parent)
 
 QString Adapter::capture(QObject *object, QVariantMap options)
 {
-    SnapshotTesting::Options opt;
+    SnapshotTesting::CaptureOptions opt;
 
     if (options.contains("captureVisibleItemOnly")) {
         opt.captureVisibleItemOnly = options["captureVisibleItemOnly"].toBool();

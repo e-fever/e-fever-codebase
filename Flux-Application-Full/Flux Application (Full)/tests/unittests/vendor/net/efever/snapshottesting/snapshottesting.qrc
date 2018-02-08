@@ -5,5 +5,7 @@
         <file>SnapshotTesting/config/snapshot-config.json</file>
         <file>SnapshotTesting/SnapshotTesting.qml</file>
         <file>SnapshotTesting/qmldir</file>
+        <file>SnapshotTesting/ScaleToFitImage.qml</file>
+        <file>SnapshotTesting/ScreenshotBrowser.qml</file>
     </qresource>
 </RCC>
