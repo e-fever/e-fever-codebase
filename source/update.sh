@@ -12,7 +12,7 @@ IFS=$_IFS
 
 for i in `ls`
 do
-    if [ -d "$i" ]
+    if [ -f "$i/wizard.json"  ]
     then
         (cd $i; qtcwizard pack-installer "../../$i")
     fi
