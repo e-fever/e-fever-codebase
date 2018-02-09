@@ -10,5 +10,3 @@ INCLUDEPATH += $$PWD
 QML_IMPORT_PATH += $$PWD
 
 HEADERS +=     $$PWD/appview.h
-
-include(vendor/vendor.pri)
