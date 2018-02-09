@@ -1,3 +1,0 @@
-module PackageA
-ExampleJS 1.0 example.js
-singleton Store 1.0 Store.qml

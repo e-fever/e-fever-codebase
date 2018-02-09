@@ -11,7 +11,7 @@ SOURCES +=     main.cpp     tests.cpp
 DEFINES += SRCDIR=\\\\\\"$$PWD/\\\\\\"
 ROOTDIR = $$PWD/../../
 
-include(vendor/vendor.pri)
+include(qpm.pri)
 include($$ROOTDIR/app/%{ProjectName}/%{ProjectName}.pri)
 
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\\\\"$$PWD/\\\\\\"

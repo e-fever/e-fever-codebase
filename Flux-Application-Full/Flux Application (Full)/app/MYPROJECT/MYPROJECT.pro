@@ -11,6 +11,7 @@ ROOTDIR = $$PWD/../..
 
 # Default rules for deployment.
 include(deployment.pri)
+include(qpm.pri)
 
 DISTFILES +=     qpm.json
 
