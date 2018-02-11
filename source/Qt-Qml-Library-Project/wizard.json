@@ -31,6 +31,10 @@
         {
             "key": "IsUiFileInUse",
             "value": "%{JS: %{UiSupport} && %{QmlUiSplit} }"
+        },
+        {
+            "key": "TargetPathBaseName",
+            "value": "%{JS: '%{TargetPath}'.split('/').slice(-1)[0]}"
         }
     ],
     "pages": [
@@ -38,6 +42,23 @@
             "trDisplayName": "Project Location",
             "trShortTitle": "Location",
             "typeId": "Project"
+        },
+        {
+            "trDisplayName": "Project Information",
+            "trShortTile": "Package",
+            "typeId": "Fields",
+            "data": [
+                {
+                    "name": "Package",
+                    "trDisplayName": "QML Package Name",
+                    "mandatory": true,
+                    "type": "LineEdit",
+                    "data": {
+                        "trText": "%{JS: '%{TargetPathBaseName}'.charAt(0).toUpperCase() + '%{TargetPathBaseName}'.slice(1)}",
+                        "validator": "[a-zA-Z][a-zA-Z0-9]*"
+                    }
+                }
+            ]
         },
         {
             "trDisplayName": "Project Management",

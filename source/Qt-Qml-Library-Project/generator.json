@@ -7,12 +7,20 @@
                 {
                     "find": "MYPROJECT",
                     "replace": "%{ProjectName}"
-                }            
+                },
+                {
+                    "find": "MYPACKAGE",
+                    "replace": "%{Package}"
+                }
             ],
             "content": [
                 {
                     "find": "MYPROJECT",
                     "replace": "%{ProjectName}"
+                },
+                {
+                    "find": "MYPACKAGE",
+                    "replace": "%{Package}"
                 }
             ]
         },
@@ -28,6 +36,6 @@
                     "replace": "\\\\"
                 }
             ]
-        }        
+        }
     ]
 }
