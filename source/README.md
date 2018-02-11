@@ -2,7 +2,6 @@
 Updates
 =======
 
-install-qpm.sh
-update.sh
+./remove-vendor.sh
+./update.sh
 
-force-add.sh #Add qpm files

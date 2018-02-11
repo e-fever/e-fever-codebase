@@ -99,6 +99,10 @@
                     "target": "tests/unittests/qpm.json"
                 },
                 {
+                    "source": "tests/unittests/qpm.pri",
+                    "target": "tests/unittests/qpm.pri"
+                },
+                {
                     "source": "tests/unittests/tests.cpp",
                     "target": "tests/unittests/tests.cpp"
                 },
@@ -109,6 +113,10 @@
                 {
                     "source": "tests/unittests/unittests.pro",
                     "target": "tests/unittests/unittests.pro"
+                },
+                {
+                    "source": "tests/unittests/XBacktrace.h",
+                    "target": "tests/unittests/XBacktrace.h"
                 }
             ]
         }

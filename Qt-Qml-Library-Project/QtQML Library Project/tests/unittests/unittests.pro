@@ -13,13 +13,18 @@ DEFINES += QUICK_TEST_SOURCE_DIR=\\\\\\"$$PWD/qmltests\\\\\\"
 
 ROOTDIR = $$PWD/../../
 
-include(vendor/vendor.pri)
+include(qpm.pri)
 include($$ROOTDIR/%{ProjectName}.pri)
 
 DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml \\
-    ../../README.md
+    ../../.travis.yml \\
+    ../../README.md \\
+    ../../appveyor.yml \\
+    qpm.pri
 
-HEADERS +=     tests.h
+HEADERS +=     tests.h \\
+    XBacktrace.h \\
+    XBacktrace.h
 
 !win32 {
     QMAKE_CXXFLAGS += -Werror
