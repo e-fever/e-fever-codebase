@@ -1,5 +1,6 @@
 {
   "dependencies": [
-    "com.github.benlau.quickflux@1.1.1"
+    "com.github.benlau.quickflux@1.1.1",
+    "net.efever.xbacktrace@0.0.1"
   ]
 }
