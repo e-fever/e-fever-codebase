@@ -12,7 +12,7 @@ SOURCES += \\
 
 DEFINES += SRCDIR=\\\\\\"$$PWD/\\\\\\" QUICK_TEST_SOURCE_DIR=\\\\\\"$$PWD/qmltests\\\\\\"
 
-include(vendor/vendor.pri)
+include(qpm.pri)
 
 DISTFILES += \\
     qpm.json \\

@@ -71,6 +71,10 @@
                     "target": "qpm.json"
                 },
                 {
+                    "source": "qpm.pri",
+                    "target": "qpm.pri"
+                },
+                {
                     "source": "tests.cpp",
                     "target": "tests.cpp"
                 },
