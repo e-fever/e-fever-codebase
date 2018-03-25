@@ -21,3 +21,6 @@ DEFINES += TEST_SOURCE_DIR=\\\"$$PWD\\\"
 
 DISTFILES += \
     tst_Sample.qml
+
+HEADERS += \
+    XBacktrace.h
