@@ -50,6 +50,10 @@
                 {
                     "source": "tst_Sample.qml",
                     "target": "tst_Sample.qml"
+                },
+                {
+                    "source": "XBacktrace.h",
+                    "target": "XBacktrace.h"
                 }
             ]
         }
