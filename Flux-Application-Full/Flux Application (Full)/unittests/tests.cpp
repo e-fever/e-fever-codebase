@@ -4,9 +4,9 @@
 #include <QtShell>
 #include <QQuickWindow>
 #include <snapshottesting.h>
-#include "tests.h"
+#include "testcases.h"
 
-Tests::Tests(QObject *parent) : QObject(parent)
+TestCases::TestCases(QObject *parent) : QObject(parent)
 {
     auto ref = [=]() {
         QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
@@ -14,7 +14,7 @@ Tests::Tests(QObject *parent) : QObject(parent)
     Q_UNUSED(ref);
 }
 
-void Tests::test_qml_loading()
+void TestCases::test_qml_loading()
 {    
     QFETCH(QString, input);
 
@@ -31,11 +31,11 @@ void Tests::test_qml_loading()
     QVERIFY(!comp.isError());
 }
 
-void Tests::test_qml_loading_data()
+void TestCases::test_qml_loading_data()
 {
     QTest::addColumn<QString>("input");
     QStringList files;
-    files << QtShell::find(QtShell::realpath_strip(SRCDIR,"../../app/%{ProjectName}/%{Package}"), "*.qml");
+    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"qml"), "*.qml");
 
     foreach (QString file , files) {
         QString content = QtShell::cat(file);
@@ -50,7 +50,7 @@ void Tests::test_qml_loading_data()
 }
 
 
-void Tests::test_Snapshot()
+void TestCases::test_Snapshot()
 {
     QFETCH(QString, input);
 
@@ -86,11 +86,11 @@ void Tests::test_Snapshot()
     delete object;
 }
 
-void Tests::test_Snapshot_data()
+void TestCases::test_Snapshot_data()
 {
     QTest::addColumn<QString>("input");
     QStringList files;
-    files << QtShell::find(QtShell::realpath_strip(SRCDIR,"../../app/%{ProjectName}/%{Package}"), "*.qml");
+    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"qml"), "*.qml");
 
     foreach (QString file , files) {
         QString content = QtShell::cat(file);
