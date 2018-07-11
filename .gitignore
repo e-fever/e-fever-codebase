@@ -41,3 +41,4 @@ CMakeLists.txt.user*
 default/
 
 source/**/vendor
+qmlimport.path

@@ -9,15 +9,16 @@ TEMPLATE = app
 SOURCES +=     main.cpp     tests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
-ROOTDIR = $$PWD/../../
+ROOTDIR = $$absolute_path($$PWD/..)
 
 include(qpm.pri)
-include($$ROOTDIR/app/MYPROJECT/MYPROJECT.pri)
+include($${ROOTDIR}/app/MYPROJECT/MYPROJECT.pri)
 
-DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD/\\\"
+DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD/\\\" ROOTDIR=\\\"$$ROOTDIR/\\\"
 
 DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml
 
-HEADERS +=     tests.h
+HEADERS += \    
+    testcases.h
 
 write_file(../../qmlimport.path, QML_IMPORT_PATH)
