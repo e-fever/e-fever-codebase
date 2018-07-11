@@ -18,7 +18,7 @@ build_script:
   - go get qpm.io/qpm
   - go install qpm.io/qpm
   - dir %GOPATH%\bin
-  - cd sourcu\Flux-Application-Full
+  - cd source\Flux-Application-Full
   - qmake
   - nmake
  

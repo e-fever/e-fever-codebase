@@ -35,7 +35,7 @@ void TestCases::test_qml_loading_data()
 {
     QTest::addColumn<QString>("input");
     QStringList files;
-    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"app/MYPROJECT/MYPACKAGE"), "*.qml");
+    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"qml"), "*.qml");
 
     foreach (QString file , files) {
         QString content = QtShell::cat(file);
@@ -90,7 +90,7 @@ void TestCases::test_Snapshot_data()
 {
     QTest::addColumn<QString>("input");
     QStringList files;
-    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"app/MYPROJECT/MYPACKAGE"), "*.qml");
+    files << QtShell::find(QtShell::realpath_strip(ROOTDIR,"qml"), "*.qml");
 
     foreach (QString file , files) {
         QString content = QtShell::cat(file);

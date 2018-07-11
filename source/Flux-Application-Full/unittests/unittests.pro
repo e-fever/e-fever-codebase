@@ -12,7 +12,8 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 ROOTDIR = $$absolute_path($$PWD/..)
 
 include(qpm.pri)
-include($${ROOTDIR}/app/MYPROJECT/MYPROJECT.pri)
+include($$ROOTDIR/cpp/cpp.pri)
+include($$ROOTDIR/qml/qml.pri)
 
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD/\\\" ROOTDIR=\\\"$$ROOTDIR/\\\"
 

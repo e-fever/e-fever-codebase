@@ -2,6 +2,6 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += app/MYPROJECT/MYPROJECT.pro \
+SUBDIRS += app/app.pro \
            unittests
 

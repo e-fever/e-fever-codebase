@@ -1,0 +1,5 @@
+INCLUDEPATH += $$PWD
+DEPENDPATH += $$PWD
+
+RESOURCES += \
+    $$PWD/qml.qrc
