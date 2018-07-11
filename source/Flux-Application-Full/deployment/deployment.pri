@@ -13,3 +13,4 @@ unix:!android {
 export(INSTALLS)
 
 include($$PWD/mac/mac.pri)
+include($$PWD/linux/linux.pri)

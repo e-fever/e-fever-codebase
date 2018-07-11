@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "mac_create_dmg": "./deployment/mac/create_dmg.sh",
-    "mac_inc_build_ver": "./deployment/mac/increase-macos-build-number.sh ./deployment/mac/Info.plist"
+    "mac_inc_build_ver": "./deployment/mac/increase-macos-build-number.sh ./deployment/mac/Info.plist",
+    "linux_create_snap": "./deployment/linux/create_snap.sh"
   },
   "author": "",
   "license": "",

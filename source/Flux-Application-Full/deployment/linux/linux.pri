@@ -1,0 +1,9 @@
+DISTFILES += \
+    $$PWD/lanto.desktop \
+    $$PWD/qt5-launch \
+    $$PWD/docker-compose.yml \
+    $$PWD/snapcraft.yaml \
+    $$PWD/icon.png \
+    $$PWD/MYPROJECT.desktop \
+    $$PWD/qt.docker \
+    $$PWD/create_snap.sh

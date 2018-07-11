@@ -88,6 +88,7 @@ gradle.properties
 # Node
 # ----
 node_modules
+npm-debug.log
 
 # Qt
 # ---
