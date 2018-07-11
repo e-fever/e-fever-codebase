@@ -12,6 +12,8 @@ unix:!android {
 
 export(INSTALLS)
 
+include($$PWD/mac/mac.pri)
+
 mac {
     # Quick and dirty way to create
     APP=$${OUT_PWD}/$${TARGET}.app

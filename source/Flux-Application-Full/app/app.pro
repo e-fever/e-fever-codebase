@@ -1,5 +1,7 @@
 TEMPLATE = app
 
+TARGET = MYPROJECT
+
 QT += qml quick
 CONFIG += c++11
 
@@ -10,9 +12,7 @@ ROOTDIR = $$absolute_path($$PWD/..)
 include(qpm.pri)
 include($$ROOTDIR/cpp/cpp.pri)
 include($$ROOTDIR/qml/qml.pri)
-
-# Default rules for deployment.
-include(deployment.pri)
+include($$ROOTDIR/deployment/deployment.pri)
 
 DISTFILES +=     qpm.json
 
