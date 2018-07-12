@@ -1,7 +1,7 @@
 version: '3'
 services:
   myproject_build_machine:
-    command: bash -c "export PATH=/opt/Qt/5.9/gcc_64/bin:$PATH; which qmake; cd /src; ./scripts/release-snap.sh"
+    command: bash -c "export PATH=/opt/Qt/5.9/gcc_64/bin:$PATH; which qmake; cd /src; ./deployment/linux/create_snap.sh"
     build:
       context: .
       dockerfile: qt.docker

@@ -6,4 +6,5 @@ DISTFILES += \
     $$PWD/icon.png \
     $$PWD/MYPROJECT.desktop \
     $$PWD/qt.docker \
+    $$PWD/run_docker.sh \
     $$PWD/create_snap.sh
