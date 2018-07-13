@@ -17,7 +17,8 @@ include($$ROOTDIR/qml/qml.pri)
 
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\\\\"$$PWD/\\\\\\" ROOTDIR=\\\\\\"$$ROOTDIR/\\\\\\"
 
-DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml
+DISTFILES +=     qpm.json     qmltests/tst_QmlTests.qml \\
+    $$ROOTDIR/README.md
 
 HEADERS += \\    
     testcases.h

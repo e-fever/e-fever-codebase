@@ -1,0 +1,30 @@
+FROM ubuntu:16.04
+
+MAINTAINER Ben Lau version: 0.1
+
+SHELL ["/bin/bash", "-c"]
+
+VOLUME /data
+
+ENV SOURCE https://download.qt.io/archive/qt/5.9/5.9.0/qt-opensource-linux-x64-5.9.0.run
+
+ENV QT_CI_PACKAGES "qt.59.gcc_64"
+
+RUN apt-get update && \\
+    apt-get install -y build-essential libx11-6 libfontconfig1 libx11-xcb1 \\
+		    libdbus-1-3 vim mesa-common-dev libgl1-mesa-dev libglib2.0-dev wget && \\
+	rm -rf /var/cache/apk/*
+
+RUN cd /opt && wget https://raw.githubusercontent.com/benlau/qtci/master/bin/extract-qt-installer && chmod u+x /opt/extract-qt-installer
+
+RUN cd /opt && wget ${SOURCE} && /opt/extract-qt-installer /opt/$(basename ${SOURCE}) /opt/Qt && rm -rf /opt/Qt/Tools; rm $(basename ${SOURCE})
+
+RUN echo "export PATH=/opt/Qt/5.9/gcc_64/bin:$PATH" >> /root/.bashrc
+
+RUN wget https://raw.githubusercontent.com/Larpon/linuxdeployqt.py/master/linuxdeployqt.py -O /usr/bin/linuxdeployqt && chmod u+x /usr/bin/linuxdeployqt
+
+RUN apt-get install -y libfuse2 libpulse-mainloop-glib0 libasound2 libxi6 libsm6  libgstreamer-plugins-base1.0-0 \\
+    libegl1-mesa python && \\
+    rm -rf /var/cache/apk/*
+
+RUN apt-get update; apt-get install -y snapcraft && rm -rf /var/cache/apk/*

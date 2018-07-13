@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-        <string>%{ProjectName}</string>
+	<string>%{ProjectName}</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Created by Qt/QMake</string>
 	<key>CFBundleIconFile</key>
-        <string>icon.icns</string>
+	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-        <string>%{ProjectName}</string>
+	<string>%{ProjectName}</string>
 	<key>CFBundleName</key>
-        <string>%{ProjectName}</string>
+	<string>%{ProjectName}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-        <string>1.0.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-        <string>1</string>
+	<string>1</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.graphics-design</string>
 	<key>LSMinimumSystemVersion</key>

@@ -85,10 +85,16 @@ gradle.properties
 !gradle-wrapper.jar
 *.iml
 
+# Node
+# ----
+node_modules
+npm-debug.log
+
 # Qt
 # ---
 qmlimport.path
 *.qmlc
 *.jsc
+
 
 

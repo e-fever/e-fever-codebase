@@ -107,6 +107,42 @@
                     "target": "deployment/deployment.pri"
                 },
                 {
+                    "source": "deployment/linux/create_snap.sh",
+                    "target": "deployment/linux/create_snap.sh"
+                },
+                {
+                    "source": "deployment/linux/docker-compose.yml",
+                    "target": "deployment/linux/docker-compose.yml"
+                },
+                {
+                    "source": "deployment/linux/icon.png",
+                    "target": "deployment/linux/icon.png"
+                },
+                {
+                    "source": "deployment/linux/linux.pri",
+                    "target": "deployment/linux/linux.pri"
+                },
+                {
+                    "source": "deployment/linux/MYPROJECT.desktop",
+                    "target": "deployment/linux/%{ProjectName}.desktop"
+                },
+                {
+                    "source": "deployment/linux/qt.docker",
+                    "target": "deployment/linux/qt.docker"
+                },
+                {
+                    "source": "deployment/linux/qt5-launch",
+                    "target": "deployment/linux/qt5-launch"
+                },
+                {
+                    "source": "deployment/linux/run_docker.sh",
+                    "target": "deployment/linux/run_docker.sh"
+                },
+                {
+                    "source": "deployment/linux/snapcraft.yaml",
+                    "target": "deployment/linux/snapcraft.yaml"
+                },
+                {
                     "source": "deployment/mac/create_dmg.sh",
                     "target": "deployment/mac/create_dmg.sh"
                 },
@@ -127,6 +163,10 @@
                     "target": "deployment/mac/icon.png"
                 },
                 {
+                    "source": "deployment/mac/increase-macos-build-number.sh",
+                    "target": "deployment/mac/increase-macos-build-number.sh"
+                },
+                {
                     "source": "deployment/mac/Info.plist",
                     "target": "deployment/mac/Info.plist"
                 },
@@ -140,12 +180,16 @@
                     "openAsProject": true
                 },
                 {
-                    "source": "qml/MYPACKAGE/actions/ActionTypes.qml",
-                    "target": "qml/%{Package}/actions/ActionTypes.qml"
+                    "source": "package.json",
+                    "target": "package.json"
                 },
                 {
-                    "source": "qml/MYPACKAGE/actions/AppActions.qml",
-                    "target": "qml/%{Package}/actions/AppActions.qml"
+                    "source": "qml/MYPACKAGE/actions/Actions.qml",
+                    "target": "qml/%{Package}/actions/Actions.qml"
+                },
+                {
+                    "source": "qml/MYPACKAGE/actions/ActionTypes.qml",
+                    "target": "qml/%{Package}/actions/ActionTypes.qml"
                 },
                 {
                     "source": "qml/MYPACKAGE/actions/qmldir",

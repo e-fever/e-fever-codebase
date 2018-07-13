@@ -16,7 +16,7 @@ Window {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            AppActions.quitApp();
+            Actions.quitApp();
         }
     }
 
