@@ -12,7 +12,7 @@ Item {
 
     MiddlewareList {
         id : middleware
-        applyTarget: AppActions
+        applyTarget: Actions
         SystemMiddleware {
         }
     }

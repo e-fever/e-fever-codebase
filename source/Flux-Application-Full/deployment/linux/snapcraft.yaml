@@ -17,8 +17,3 @@ parts:
     - libxcb-xkb1
     - fontconfig-config
 
-apps:
-  myproject:
-    command: qt5-launch $SNAP/AppRun
-    plugs: [x11, home, opengl, desktop, gsettings, removable-media]
-    desktop: MYPROJECT.desktop

@@ -3,7 +3,7 @@
         <file>MYPACKAGE/stores/MainStore.qml</file>
         <file>MYPACKAGE/stores/RootStore.qml</file>
         <file>MYPACKAGE/stores/qmldir</file>
-        <file>MYPACKAGE/actions/AppActions.qml</file>
+        <file>MYPACKAGE/actions/Actions.qml</file>
         <file>MYPACKAGE/actions/ActionTypes.qml</file>
         <file>MYPACKAGE/actions/qmldir</file>
         <file>MYPACKAGE/constants/Constants.qml</file>
