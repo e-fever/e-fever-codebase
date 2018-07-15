@@ -22,7 +22,8 @@ build_script:
   - cd source\Flux-Application-Full && qmake && nmake
   
   - cd %ROOT_DIR%
-  - cd source/Qt-Qml-Library-Project & exit 0 
+  - cd source/Qt-Qml-Library-Project
+  - qmake & exit 0
   - tree /F /a
 
   - cd %ROOT_DIR%

@@ -83,16 +83,12 @@
                     "target": "appveyor.yml"
                 },
                 {
+                    "source": "buildlib/buildlib.pro",
+                    "target": "buildlib/buildlib.pro"
+                },
+                {
                     "source": "LICENSE",
                     "target": "LICENSE"
-                },
-                {
-                    "source": "MYPACKAGE/dummy.qml",
-                    "target": "%{Package}/dummy.qml"
-                },
-                {
-                    "source": "MYPROJECT.pri",
-                    "target": "%{ProjectName}.pri"
                 },
                 {
                     "source": "MYPROJECT.pro",
@@ -100,48 +96,80 @@
                     "openAsProject": true
                 },
                 {
-                    "source": "MYPROJECT.qrc",
-                    "target": "%{ProjectName}.qrc"
+                    "source": "qpm.json",
+                    "target": "qpm.json"
                 },
                 {
                     "source": "README.md",
                     "target": "README.md"
                 },
                 {
-                    "source": "tests/unittests/.gitignore",
-                    "target": "tests/unittests/.gitignore"
+                    "source": "src/cpp/cpp.pri",
+                    "target": "src/cpp/cpp.pri"
                 },
                 {
-                    "source": "tests/unittests/main.cpp",
-                    "target": "tests/unittests/main.cpp"
+                    "source": "src/cpp/dummy.cpp",
+                    "target": "src/cpp/dummy.cpp"
                 },
                 {
-                    "source": "tests/unittests/qmltests/tst_QmlTests.qml",
-                    "target": "tests/unittests/qmltests/tst_QmlTests.qml"
+                    "source": "src/cpp/dummy.h",
+                    "target": "src/cpp/dummy.h"
                 },
                 {
-                    "source": "tests/unittests/qpm.json",
-                    "target": "tests/unittests/qpm.json"
+                    "source": "src/MYPROJECT.pri",
+                    "target": "src/%{ProjectName}.pri"
                 },
                 {
-                    "source": "tests/unittests/qpm.pri",
-                    "target": "tests/unittests/qpm.pri"
+                    "source": "src/qml/MYPACKAGE/DummyItem.qml",
+                    "target": "src/qml/%{Package}/DummyItem.qml"
                 },
                 {
-                    "source": "tests/unittests/tests.cpp",
-                    "target": "tests/unittests/tests.cpp"
+                    "source": "src/qml/MYPACKAGE/qmldir",
+                    "target": "src/qml/%{Package}/qmldir"
                 },
                 {
-                    "source": "tests/unittests/tests.h",
-                    "target": "tests/unittests/tests.h"
+                    "source": "src/qml/MYPROJECT.qrc",
+                    "target": "src/qml/%{ProjectName}.qrc"
                 },
                 {
-                    "source": "tests/unittests/unittests.pro",
-                    "target": "tests/unittests/unittests.pro"
+                    "source": "src/qml/myprojectqmlplugin.h",
+                    "target": "src/qml/myprojectqmlplugin.h"
                 },
                 {
-                    "source": "tests/unittests/XBacktrace.h",
-                    "target": "tests/unittests/XBacktrace.h"
+                    "source": "src/qml/MYPROJECTqmltypes.cpp",
+                    "target": "src/qml/%{ProjectName}qmltypes.cpp"
+                },
+                {
+                    "source": "src/qml/qml.pri",
+                    "target": "src/qml/qml.pri"
+                },
+                {
+                    "source": "tests/main.cpp",
+                    "target": "tests/main.cpp"
+                },
+                {
+                    "source": "tests/qmltests/tst_QmlTests.qml",
+                    "target": "tests/qmltests/tst_QmlTests.qml"
+                },
+                {
+                    "source": "tests/qpm.json",
+                    "target": "tests/qpm.json"
+                },
+                {
+                    "source": "tests/qpm.pri",
+                    "target": "tests/qpm.pri"
+                },
+                {
+                    "source": "tests/testcases.cpp",
+                    "target": "tests/testcases.cpp"
+                },
+                {
+                    "source": "tests/testcases.h",
+                    "target": "tests/testcases.h"
+                },
+                {
+                    "source": "tests/tests.pro",
+                    "target": "tests/tests.pro"
                 }
             ]
         }

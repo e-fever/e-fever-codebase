@@ -6,3 +6,6 @@ QML_IMPORT_PATH += $$PWD
 
 SOURCES += \
     $$PWD/MYPROJECTqmltypes.cpp
+
+HEADERS += \
+    $$PWD/myprojectqmlplugin.h

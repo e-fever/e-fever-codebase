@@ -18,12 +18,12 @@ static void init() {
     }
     registered = true;
 
-    qmlRegisterSingletonType<QObject>("MYPACKAGE", 1, 0, "MYPACKAGESingleton", provider);
+    qmlRegisterSingletonType<QObject>("%{Package}", 1, 0, "%{Package}Singleton", provider);
 }
 
 Q_COREAPP_STARTUP_FUNCTION(init)
 
-void MYPROJECTQmlPlugin::registerTypes(const char *uri) {
+void %{ProjectName}QmlPlugin::registerTypes(const char *uri) {
     Q_UNUSED(uri);
     init();
 }
@@ -31,6 +31,6 @@ void MYPROJECTQmlPlugin::registerTypes(const char *uri) {
 #define DECLARE_LIBRARY(name) void __3rdparty_qt_static_library_entry_ ## name() {}
 
 /// Prevent the init() function to be discarded during static linking
-DECLARE_LIBRARY(MYPACKAGE)
+DECLARE_LIBRARY(%{Package})
 
 

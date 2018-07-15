@@ -2,4 +2,7 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += tests/unittests
+SUBDIRS += buildlib
+SUBDIRS += tests
+
+tests.depends = builddlib

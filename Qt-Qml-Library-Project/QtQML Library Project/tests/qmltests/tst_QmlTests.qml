@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtTest 1.0
 import Testable 1.0
+import %{Package} 1.0
 
 Item {
     id: window
@@ -11,7 +12,12 @@ Item {
         name: "QmlTests"
         when: windowShown
 
+        DummyItem {
+
+        }
+
         function test_dummy() {
+            compare(%{Package}Singleton.objectName, "Singleton");
         }
     }
 }
