@@ -21,15 +21,8 @@ build_script:
   - dir %GOPATH%\bin
 
   - cd %ROOT_DIR%
-  - cd source/Qt-Qml-Library-Project
-  - qmake
-  - nmake & exit 0
-  - tree /F /a
-
-  - cd %ROOT_DIR%
   - cd source\Flux-Application-Full && qmake && nmake
   
-
   - cd %ROOT_DIR%
   - cd source/Qt-Qml-Library-Project && qmake && nmake
  
