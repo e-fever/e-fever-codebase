@@ -35,10 +35,10 @@ HEADERS += \
 win32 {
     CONFIG(debug, debug|release) {
         QMAKE_LIBDIR += $${OUT_PWD}/../buildlib/debug
-        PRE_TARGETDEPS += $${OUT_PWD}/../buildlib/debug/libMYPROJECT.a
+        PRE_TARGETDEPS += $${OUT_PWD}/../buildlib/debug/MYPROJECT.lib
     } else {
         QMAKE_LIBDIR += $${OUT_PWD}/../buildlib/release
-        PRE_TARGETDEPS += $${OUT_PWD}/../buildlib/release/libMYPROJECT.a
+        PRE_TARGETDEPS += $${OUT_PWD}/../buildlib/release/MYPROJECT.lib
     }
 
 } else {
