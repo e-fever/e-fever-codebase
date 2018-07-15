@@ -19,12 +19,15 @@ build_script:
   - go get qpm.io/qpm
   - go install qpm.io/qpm
   - dir %GOPATH%\bin
-  - cd source\Flux-Application-Full && qmake && nmake
-  
+
   - cd %ROOT_DIR%
   - cd source/Qt-Qml-Library-Project
-  - qmake & exit 0
+  - qmake
+  - name & exit 0
   - tree /F /a
+  
+  - cd source\Flux-Application-Full && qmake && nmake
+  
 
   - cd %ROOT_DIR%
   - cd source/Qt-Qml-Library-Project && qmake && nmake
