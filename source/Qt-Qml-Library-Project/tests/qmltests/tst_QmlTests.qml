@@ -17,6 +17,7 @@ Item {
         }
 
         function test_dummy() {
+            compare(MYPACKAGESingleton.objectName, "Singleton");
         }
     }
 }

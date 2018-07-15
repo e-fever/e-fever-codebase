@@ -13,6 +13,10 @@ namespace AutoTestRegister { // For Qt Creator's auto test plugin
     QUICK_TEST_MAIN(QuickTests)
 }
 
+#define USE_LIBRARY(name) \
+    do { extern void __3rdparty_qt_static_library_entry_ ## name(); \
+         __3rdparty_qt_static_library_entry_ ## name(); } while (0)
+
 int main(int argc, char *argv[])
 {
     XBacktrace::enableBacktraceLogOnUnhandledException();
@@ -20,6 +24,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     Q_INIT_RESOURCE(MYPROJECT);
+
+    // Prevent the init() function for QML type registration to be discarded during static linking
+    USE_LIBRARY(MYPACKAGE);
 
     TestRunner runner;
     runner.add<TestCases>();

@@ -3,3 +3,6 @@ RESOURCES += \
 
 DEPENDPATH += $$PWD
 QML_IMPORT_PATH += $$PWD
+
+SOURCES += \
+    $$PWD/MYPROJECTqmltypes.cpp

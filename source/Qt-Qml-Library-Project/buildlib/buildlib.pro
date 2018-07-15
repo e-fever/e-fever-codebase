@@ -1,6 +1,9 @@
 TARGET = MYPROJECT
 TEMPLATE = lib
 
+#Remove this line if you are building a non-QML library
+QT += quick
+
 ROOT_DIR = $$absolute_path($$PWD/..)
 
 isEmpty(SHARED): SHARED = "false"
