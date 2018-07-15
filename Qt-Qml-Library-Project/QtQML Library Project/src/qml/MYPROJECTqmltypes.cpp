@@ -1,5 +1,5 @@
 #include <QtQml>
-#include "myprojectqmlplugin.h"
+#include "%{ProjectName}qmlplugin.h"
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(scriptEngine);

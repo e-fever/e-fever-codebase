@@ -132,8 +132,8 @@
                     "target": "src/qml/%{ProjectName}.qrc"
                 },
                 {
-                    "source": "src/qml/myprojectqmlplugin.h",
-                    "target": "src/qml/myprojectqmlplugin.h"
+                    "source": "src/qml/MYPROJECTqmlplugin.h",
+                    "target": "src/qml/%{ProjectName}qmlplugin.h"
                 },
                 {
                     "source": "src/qml/MYPROJECTqmltypes.cpp",
