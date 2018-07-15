@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtTest 1.0
 import Testable 1.0
+import MYPACKAGE 1.0
 
 Item {
     id: window
@@ -10,6 +11,10 @@ Item {
     TestCase {
         name: "QmlTests"
         when: windowShown
+
+        DummyItem {
+
+        }
 
         function test_dummy() {
         }

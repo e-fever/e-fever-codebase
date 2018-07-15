@@ -14,4 +14,5 @@ before_install:
 script:
     - source qt-5.7.env
     - (cd source/Flux-Application-Full; qmake; make)
+    - (cd source/Qt-Qml-Library-Project; qmake; make)
   

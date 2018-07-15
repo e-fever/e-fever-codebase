@@ -2,9 +2,9 @@
 #include <QTest>
 #include <Automator>
 #include <QtShell>
-#include "tests.h"
+#include "testcases.h"
 
-Tests::Tests(QObject *parent) : QObject(parent)
+TestCases::TestCases(QObject *parent) : QObject(parent)
 {
     auto ref = [=]() {
         QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
@@ -12,7 +12,7 @@ Tests::Tests(QObject *parent) : QObject(parent)
     Q_UNUSED(ref);
 }
 
-void Tests::test_qml_loading()
+void TestCases::test_qml_loading()
 {
     QFETCH(QString, input);
 
@@ -28,11 +28,11 @@ void Tests::test_qml_loading()
     QVERIFY(!comp.isError());
 }
 
-void Tests::test_qml_loading_data()
+void TestCases::test_qml_loading_data()
 {
     QTest::addColumn<QString>("input");
     QStringList files;
-    files << QtShell::find(QtShell::realpath_strip(SRCDIR,"../../MYPACKAGE"), "*.qml");
+    files << QtShell::find(QtShell::realpath_strip(SRCDIR,"../src/qml/MYPACKAGE"), "*.qml");
 
     foreach (QString file , files) {
         QString content = QtShell::cat(file);

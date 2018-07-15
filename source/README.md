@@ -2,6 +2,6 @@
 Updates
 =======
 
-./remove-vendor.sh
+./clean.sh
 ./update.sh
 

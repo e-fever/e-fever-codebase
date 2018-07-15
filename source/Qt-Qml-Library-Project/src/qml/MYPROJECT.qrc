@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qt-project.org/imports">
+        <file>MYPACKAGE/qmldir</file>
+        <file>MYPACKAGE/DummyItem.qml</file>
+    </qresource>
+</RCC>
