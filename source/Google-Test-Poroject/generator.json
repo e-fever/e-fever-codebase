@@ -1,0 +1,42 @@
+{
+    "ignoreFilePattern": [
+        "\\.swp$",
+        "\\.DS_Store$",
+        "\\.pro.user$",
+        "\\.qmlc$",
+        "\\.jsc$"
+    ],
+    "rules": [
+        {
+            "pattern": ".*",
+            "content": [
+                {
+                    "find": "\\\\",
+                    "replace": "\\\\"
+                },
+                {
+                    "find": "PROJECT",
+                    "replace": "%{ProjectName}"
+                },
+                {
+                    "find": "PACKAGE",
+                    "replace": "%{Package}"                    
+                }                
+            ],
+            "path": [
+                {
+                    "find": "PROJECT",
+                    "replace": "%{ProjectName}"
+                },
+                {
+                    "find": "PACKAGE",
+                    "replace": "%{Package}"                    
+                }                
+            ]
+        },
+        {
+            "pattern": "PROJECT.pro$",
+            "openAsProject": true
+        }
+    ]
+}
