@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
-#include <math.h>
-#include <list>
+#include <QCoreApplication>
 
 TEST(%{ProjectName}ests, test_basic) {
     ASSERT_EQ(true, true);
@@ -8,9 +7,9 @@ TEST(%{ProjectName}ests, test_basic) {
 
 int main(int argc, char** argv) {
 
-#ifdef QT_CORE_LIB
-    static_assert(True, "Qt Core is defined");
-#endif
+    QCoreApplication app(argc, argv);
+    Q_UNUSED(app);
+
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

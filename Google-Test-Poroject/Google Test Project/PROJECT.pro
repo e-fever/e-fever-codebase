@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui core
+QT       +=  core
 
 TARGET = %{ProjectName}
 CONFIG   += console
