@@ -13,6 +13,3 @@ include(qpm.pri)
 include($$ROOTDIR/cpp/cpp.pri)
 include($$ROOTDIR/qml/qml.pri)
 include($$ROOTDIR/deployment/deployment.pri)
-
-DISTFILES +=     qpm.json
-

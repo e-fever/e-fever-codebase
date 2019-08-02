@@ -2,5 +2,5 @@ TEMPLATE = subdirs
 
 CONFIG += ordered
 
-SUBDIRS += app \
-           tests
+SUBDIRS += qmltests \
+    cpptests
