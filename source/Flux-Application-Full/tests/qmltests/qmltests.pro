@@ -22,5 +22,9 @@ DEFINES += TEST_SOURCE_DIR=\\\"$$PWD\\\"
 DISTFILES += \
     tst_Sample.qml
 
+include($$ROOTDIR/cpp/cpp.pri)
+include($$ROOTDIR/qml/qml.pri)
+include($$ROOTDIR/vendor/vendor.pri)
+
 HEADERS += \
     XBacktrace.h
